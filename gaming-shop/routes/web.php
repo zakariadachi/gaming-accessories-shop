@@ -1,11 +1,15 @@
 <?php
 
 use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\ProduitController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('/produits', [ProduitController::class, 'index'])->name('produits.index');
+Route::get('/produits/{produit}', [ProduitController::class, 'show'])->name('produits.show');
 
 Route::middleware('guest')->group(function () {
     Route::get('/register', fn() => view('auth.register'))->name('register');
