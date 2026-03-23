@@ -17,6 +17,7 @@ class Produit extends Model
         'nom',
         'prix',
         'stock',
+        'image',
         'categorie_id',
     ];
 
