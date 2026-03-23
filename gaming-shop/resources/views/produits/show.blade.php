@@ -51,8 +51,12 @@
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
 
             {{-- Image --}}
-            <div class="bg-white dark:bg-white/5 border border-slate-200 dark:border-primary/20 rounded-2xl h-96 flex items-center justify-center">
-                <span class="material-symbols-outlined text-9xl text-primary/30">sports_esports</span>
+            <div class="bg-white dark:bg-white/5 border border-slate-200 dark:border-primary/20 rounded-2xl h-96 overflow-hidden flex items-center justify-center">
+                @if ($produit->image)
+                    <img src="{{ $produit->image }}" alt="{{ $produit->nom }}" class="w-full h-full object-cover"/>
+                @else
+                    <span class="material-symbols-outlined text-9xl text-primary/30">sports_esports</span>
+                @endif
             </div>
 
             {{-- Infos --}}
@@ -95,8 +99,14 @@
                 <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
                     @foreach ($similaires as $similaire)
                         <a href="{{ route('produits.show', $similaire) }}" class="group bg-white dark:bg-white/5 border border-slate-200 dark:border-primary/20 rounded-2xl overflow-hidden hover:border-primary/60 transition-all">
-                            <div class="h-32 bg-primary/10 flex items-center justify-center">
-                                <span class="material-symbols-outlined text-4xl text-primary/40">sports_esports</span>
+                            <div class="h-32 bg-primary/10 relative overflow-hidden">
+                                @if ($similaire->image)
+                                    <img src="{{ $similaire->image }}" alt="{{ $similaire->nom }}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"/>
+                                @else
+                                    <div class="w-full h-full flex items-center justify-center">
+                                        <span class="material-symbols-outlined text-4xl text-primary/40">sports_esports</span>
+                                    </div>
+                                @endif
                             </div>
                             <div class="p-3">
                                 <h3 class="font-semibold text-sm group-hover:text-primary transition-colors truncate">{{ $similaire->nom }}</h3>
