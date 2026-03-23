@@ -73,11 +73,18 @@ class CartController extends Controller
 
         $produit = Produit::find($id);
 
+        if (!$produit) {
+            unset($cart[$id]);
+            $this->saveCart($request, $cart);
+            return back()->with('error', 'Ce produit n\'existe pas!');
+        }
+
         if ($request->quantity > $produit->stock) {
-            return back()->with('error', 'Stock insuffisant.');
+            return back()->with('error', 'Stock insuffisant. Seulement ' . $produit->stock . ' disponible(s).');
         }
 
         $cart[$id]['quantity'] = $request->quantity;
+        $cart[$id]['prix']     = $produit->prix;
 
         $this->saveCart($request, $cart);
 
