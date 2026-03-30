@@ -75,7 +75,8 @@
                     <a href="{{ route('cart.index') }}" class="relative flex h-10 w-10 items-center justify-center rounded-lg bg-slate-200 hover:bg-slate-300 dark:bg-surface-light dark:hover:bg-primary/20 transition-all">
                         <span class="material-symbols-outlined">shopping_cart</span>
                     </a>
-                    <a href="{{ route('login') }}" class="hidden h-10 items-center justify-center rounded-lg bg-primary px-5 text-sm font-bold text-white shadow-lg shadow-primary/30 hover:brightness-110 sm:flex">Login</a>
+                    <a href="{{ route('login') }}" class="hidden h-10 items-center justify-center rounded-lg border border-primary/50 px-5 text-sm font-bold text-primary hover:bg-primary/10 transition-all sm:flex">Login</a>
+                    <a href="{{ route('register') }}" class="hidden h-10 items-center justify-center rounded-lg bg-primary px-5 text-sm font-bold text-white shadow-lg shadow-primary/30 hover:brightness-110 transition-all sm:flex">Register</a>
                     <a href="{{ route('login') }}" class="flex h-10 w-10 items-center justify-center rounded-lg bg-slate-200 dark:bg-surface-light sm:hidden">
                         <span class="material-symbols-outlined">person</span>
                     </a>
@@ -115,17 +116,7 @@
             </div>
         </section>
 
-        <!-- Product Categories Filter -->
-        <div class="mb-8 flex flex-wrap items-center gap-3">
-            <a href="{{ route('produits.index') }}" class="rounded-full bg-primary px-6 py-2 text-sm font-bold text-white">All Gear</a>
-            @foreach ($categories as $categorie)
-                <a href="{{ route('produits.index', ['categorie' => $categorie->id]) }}" class="rounded-full bg-slate-200 px-6 py-2 text-sm font-medium hover:bg-primary hover:text-white dark:bg-surface-light dark:hover:bg-primary transition-colors">
-                    {{ $categorie->nom }}
-                </a>
-            @endforeach
-        </div>
-
-        <!-- Product Grid -->
+<!-- Product Grid -->
         <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
             @foreach ($produits as $produit)
                 <div class="group flex flex-col overflow-hidden rounded-xl bg-white p-4 shadow-sm transition-all hover:shadow-xl dark:bg-surface">
