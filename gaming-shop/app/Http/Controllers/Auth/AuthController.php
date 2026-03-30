@@ -26,9 +26,7 @@ class AuthController extends Controller
             'password' => Hash::make($request->password),
         ]);
 
-        Auth::login($user);
-
-        return redirect()->route('home');
+        return redirect()->route('login')->with('success', 'Compte créé avec succès. Veuillez vous connecter.');
     }
 
     public function login(Request $request): RedirectResponse
