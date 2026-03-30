@@ -31,7 +31,7 @@ Route::middleware('auth')->group(function () {
     Route::put('/profil/infos', [ProfilController::class, 'updateInfos'])->name('profil.infos');
     Route::put('/profil/password', [ProfilController::class, 'updatePassword'])->name('profil.password');
 
-    Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
+    Route::get('/cart', fn() => redirect()->route('produits.index'))->name('cart.index');
     Route::post('/cart/{produit}', [CartController::class, 'add'])->name('cart.add');
     Route::put('/cart/{id}', [CartController::class, 'update'])->name('cart.update');
     Route::delete('/cart/{id}', [CartController::class, 'remove'])->name('cart.remove');
