@@ -89,7 +89,12 @@
     <!-- TopNavBar -->
     <nav class="fixed top-0 w-full z-50 bg-[#0e0e0e]/60 backdrop-blur-xl shadow-[0px_20px_40px_rgba(133,35,221,0.08)]">
         <div class="flex justify-between items-center w-full px-8 py-4 max-w-screen-2xl mx-auto font-['Plus_Jakarta_Sans'] tracking-tight antialiased">
-            <div class="text-2xl font-black tracking-tighter text-white uppercase">NEON KINETIC</div>
+            <div class="text-2xl font-black tracking-tighter uppercase flex items-center gap-2">
+                <a href="{{ route('home') }}">
+                    <img src="/logo.png" alt="GearHub Logo" class="h-14 w-auto"/>
+                </a>
+                <a href="{{ route('home') }}" class="hidden sm:block" style="background: linear-gradient(135deg, #00d4ff, #8a2ce2); -webkit-background-clip: text; -webkit-text-fill-color: transparent; filter: drop-shadow(0 0 8px #00d4ff60);">GearHub</a>
+            </div>
             <div class="hidden md:flex items-center space-x-8">
                 <a class="text-[#ca98ff] font-bold border-b-2 border-[#ca98ff] pb-1" href="{{ route('produits.index') }}">Hardware</a>
                 <a class="text-[#adaaaa] hover:text-white transition-colors" href="#">Gear</a>
@@ -111,9 +116,8 @@
                             </button>
                         </form>
                     @else
-                        <a href="{{ route('login') }}" class="hover:bg-[#ca98ff]/10 p-2 rounded-full transition-all duration-300">
-                            <span class="material-symbols-outlined text-[#ca98ff]">person</span>
-                        </a>
+                        <a href="{{ route('login') }}" class="border border-[#ca98ff]/50 text-[#ca98ff] px-4 py-2 rounded-lg text-sm font-bold hover:bg-[#ca98ff]/10 transition-all">Login</a>
+                        <a href="{{ route('register') }}" class="bg-[#8a2ce2] text-white px-4 py-2 rounded-lg text-sm font-bold hover:brightness-110 transition-all">Register</a>
                     @endauth
                 </div>
             </div>
@@ -220,7 +224,10 @@
     <!-- Footer -->
     <footer class="w-full border-t border-[#484847]/15 mt-20 bg-[#0e0e0e] font-['Manrope'] text-xs uppercase tracking-widest">
         <div class="w-full px-8 py-12 flex flex-col md:flex-row justify-between items-center max-w-screen-2xl mx-auto">
-            <div class="text-[#adaaaa] mb-6 md:mb-0">© 2024 NEON KINETIC. ENGINEERED FOR PERFORMANCE.</div>
+            <div class="text-[#adaaaa] mb-6 md:mb-0 flex items-center gap-2">
+                    <img src="/logo.png" alt="GearHub Logo" class="h-8 w-auto"/>
+                    <span style="background: linear-gradient(135deg, #00d4ff, #8a2ce2); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">GearHub</span>
+                </div>
             <div class="flex space-x-8">
                 <a class="text-[#adaaaa] hover:text-[#ca98ff] transition-colors" href="#">Privacy Policy</a>
                 <a class="text-[#adaaaa] hover:text-[#ca98ff] transition-colors" href="#">Terms of Service</a>
