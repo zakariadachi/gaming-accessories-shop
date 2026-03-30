@@ -67,6 +67,13 @@
                 <p class="text-slate-600 dark:text-slate-400">Welcome back! Please enter your details.</p>
             </header>
 
+            {{-- Success message after register --}}
+            @if (session('success'))
+                <div class="bg-green-500/10 border border-green-500/30 rounded-lg p-4">
+                    <p class="text-green-400 text-sm">{{ session('success') }}</p>
+                </div>
+            @endif
+
             {{-- Erreurs de validation --}}
             @if ($errors->any())
                 <div class="bg-red-500/10 border border-red-500/30 rounded-lg p-4">
