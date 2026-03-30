@@ -1,64 +1,10 @@
-<!DOCTYPE html>
-<html class="dark" lang="fr">
-<head>
-    <meta charset="utf-8"/>
-    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-    <title>Mon Profil - GamingSite</title>
-    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet"/>
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
-    <script>
-        tailwind.config = {
-            darkMode: "class",
-            theme: {
-                extend: {
-                    colors: {
-                        "primary": "#ca98ff",
-                        "primary-dim": "#9c42f4",
-                        "surface-container": "#1a1a1a",
-                        "surface-container-high": "#20201f",
-                        "surface-container-highest": "#262626",
-                        "on-surface-variant": "#adaaaa",
-                        "outline-variant": "#484847",
-                        "background": "#0e0e0e",
-                        "secondary-container": "#692886",
-                        "on-secondary-container": "#efc0ff",
-                        "error": "#ff6e84",
-                        "tertiary": "#ff8b9a",
-                    },
-                    fontFamily: {
-                        "headline": ["Plus Jakarta Sans"],
-                        "body": ["Manrope"],
-                    },
-                },
-            },
-        }
-    </script>
-    <style>
-        body { background-color: #0e0e0e; color: #ffffff; font-family: 'Manrope', sans-serif; }
-        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; display: inline-block; line-height: 1; }
-    </style>
-</head>
-<body>
+@extends('layouts.main')
 
-    <!-- Navbar -->
-    <nav class="fixed top-0 w-full z-50 bg-[#0e0e0e]/60 backdrop-blur-xl shadow-[0px_20px_40px_rgba(133,35,221,0.08)]">
-        <div class="flex justify-between items-center w-full px-8 py-4 max-w-screen-2xl mx-auto">
-            <a href="{{ route('produits.index') }}" class="text-2xl font-black tracking-tighter text-white uppercase font-headline">NEON KINETIC</a>
-            <div class="flex items-center gap-4">
-                <a href="{{ route('produits.index') }}" class="text-on-surface-variant hover:text-white transition-colors text-sm">Produits</a>
-                <span class="text-primary font-semibold text-sm">{{ Auth::user()->nom }}</span>
-                <form action="{{ route('logout') }}" method="POST">
-                    @csrf
-                    <button class="hover:bg-primary/10 p-2 rounded-full transition-all">
-                        <span class="material-symbols-outlined text-primary">logout</span>
-                    </button>
-                </form>
-            </div>
-        </div>
-    </nav>
+@section('title', 'Mon Profil - GearHub')
 
-    <div class="max-w-3xl mx-auto px-6 pt-32 pb-16">
+@section('content')
+
+    <div class="max-w-3xl mx-auto px-6 py-12">
 
         <!-- Header -->
         <div class="mb-10 flex items-center gap-4">
@@ -73,7 +19,7 @@
 
         <div class="space-y-6">
 
-            <!-- Formulaire Informations -->
+            <!-- Personal Info Form -->
             <div class="bg-surface-container rounded-2xl p-8">
                 <div class="flex items-center gap-3 mb-6">
                     <span class="material-symbols-outlined text-primary">person</span>
@@ -119,13 +65,13 @@
                         </div>
                     </div>
 
-                    <button type="submit" class="w-full py-3.5 bg-gradient-to-r from-primary to-primary-dim text-[#46007d] font-bold rounded-xl hover:opacity-90 active:scale-[0.98] transition-all">
+                    <button type="submit" class="w-full py-3.5 bg-gradient-to-r from-primary to-primary-dim text-on-primary font-bold rounded-xl hover:opacity-90 active:scale-[0.98] transition-all">
                         Sauvegarder les modifications
                     </button>
                 </form>
             </div>
 
-            <!-- Formulaire Mot de passe -->
+            <!-- Password Form -->
             <div class="bg-surface-container rounded-2xl p-8">
                 <div class="flex items-center gap-3 mb-6">
                     <span class="material-symbols-outlined text-primary">lock</span>
@@ -180,7 +126,7 @@
                         </div>
                     </div>
 
-                    <button type="submit" class="w-full py-3.5 bg-gradient-to-r from-primary to-primary-dim text-[#46007d] font-bold rounded-xl hover:opacity-90 active:scale-[0.98] transition-all">
+                    <button type="submit" class="w-full py-3.5 bg-gradient-to-r from-primary to-primary-dim text-on-primary font-bold rounded-xl hover:opacity-90 active:scale-[0.98] transition-all">
                         Mettre à jour le mot de passe
                     </button>
                 </form>
@@ -189,5 +135,4 @@
         </div>
     </div>
 
-</body>
-</html>
+@endsection
