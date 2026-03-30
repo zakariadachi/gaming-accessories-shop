@@ -17,11 +17,11 @@ Route::get('/produits/{produit}', [ProduitController::class, 'show'])->name('pro
 
 Route::middleware('guest')->group(function () {
     Route::get('/register', fn() => view('auth.register'))->name('register');
-    Route::post('/register', [AuthController::class, 'register']);
-
     Route::get('/login', fn() => view('auth.login'))->name('login');
     Route::post('/login', [AuthController::class, 'login']);
 });
+
+Route::post('/register', [AuthController::class, 'register']);
 
 Route::middleware('auth')->group(function () {
     Route::get('/dashboard', fn() => view('dashboard'))->name('dashboard');
