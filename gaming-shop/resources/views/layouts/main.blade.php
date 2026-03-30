@@ -99,7 +99,7 @@
             <!-- Logo -->
             <a href="{{ route('home') }}" class="flex items-center gap-2">
                 <img src="/logo.png" alt="GearHub Logo" class="h-14 w-auto"/>
-                <span class="hidden text-xl font-black tracking-tighter sm:block" style="background: linear-gradient(135deg, #00d4ff, #8a2ce2); -webkit-background-clip: text; -webkit-text-fill-color: transparent; filter: drop-shadow(0 0 8px #00d4ff60);">GearHub</span>
+                <span class="hidden text-xl font-black tracking-tighter sm:block" style="background: linear-gradient(135deg, #00d4ff, #8a2ce2); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; filter: drop-shadow(0 0 8px #00d4ff60);">GearHub</span>
             </a>
 
             <!-- Search Bar -->
@@ -156,7 +156,7 @@
         <div class="mx-auto max-w-7xl px-8 py-12 flex flex-col md:flex-row justify-between items-center gap-6">
             <a href="{{ route('home') }}" class="flex items-center gap-2">
                 <img src="/logo.png" alt="GearHub Logo" class="h-8 w-auto"/>
-                <span class="font-black text-sm" style="background: linear-gradient(135deg, #00d4ff, #8a2ce2); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">GearHub</span>
+                <span class="font-black text-sm" style="background: linear-gradient(135deg, #00d4ff, #8a2ce2); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;">GearHub</span>
             </a>
             <div class="flex gap-8">
                 <a class="text-on-surface-variant hover:text-primary transition-colors" href="#">Privacy Policy</a>
