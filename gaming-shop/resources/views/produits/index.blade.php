@@ -5,7 +5,7 @@
     <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
     <title>NEON KINETIC | Precision Gaming Gear</title>
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Manrope:wght@400;500;600;700&family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"/>
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
     <script id="tailwind-config">
         tailwind.config = {
@@ -13,6 +13,11 @@
             theme: {
                 extend: {
                     colors: {
+                        "primary": "#8a2ce2",
+                        "background-light": "#f7f6f8",
+                        "background-dark": "#191121",
+                        "surface": "#2d1b42",
+                        "surface-light": "#3d2a56",
                         "secondary-fixed-dim": "#e9aeff",
                         "inverse-primary": "#8523dd",
                         "inverse-surface": "#fcf9f8",
@@ -27,9 +32,6 @@
                         "error-container": "#a70138",
                         "inverse-on-surface": "#565555",
                         "surface-container": "#1a1a1a",
-                        "surface": "#0e0e0e",
-                        "primary-dim": "#9c42f4",
-                        "on-tertiary-fixed": "#39000e",
                         "surface-bright": "#2c2c2c",
                         "secondary": "#e097fd",
                         "on-surface-variant": "#adaaaa",
@@ -58,7 +60,7 @@
                         "on-tertiary-fixed-variant": "#711229",
                         "error-dim": "#d73357",
                         "tertiary-fixed": "#ff909e",
-                        "primary": "#ca98ff",
+                        "primary-dim": "#9c42f4",
                         "tertiary": "#ff8b9a",
                         "surface-container-high": "#20201f",
                         "on-secondary-fixed-variant": "#743391",
@@ -66,11 +68,15 @@
                         "background": "#0e0e0e"
                     },
                     fontFamily: {
+                        "display": ["Inter", "sans-serif"],
                         "headline": ["Plus Jakarta Sans"],
                         "body": ["Manrope"],
                         "label": ["Manrope"]
                     },
-                    borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"},
+                    borderRadius: {
+                        "DEFAULT": "0.25rem", "lg": "0.5rem",
+                        "xl": "0.75rem", "full": "9999px"
+                    },
                 },
             },
         }
@@ -86,43 +92,58 @@
 </head>
 <body class="selection:bg-primary selection:text-on-primary">
 
-    <!-- TopNavBar -->
-    <nav class="fixed top-0 w-full z-50 bg-[#0e0e0e]/60 backdrop-blur-xl shadow-[0px_20px_40px_rgba(133,35,221,0.08)]">
-        <div class="flex justify-between items-center w-full px-8 py-4 max-w-screen-2xl mx-auto font-['Plus_Jakarta_Sans'] tracking-tight antialiased">
-            <div class="text-2xl font-black tracking-tighter uppercase flex items-center gap-2">
-                <a href="{{ route('home') }}">
-                    <img src="/logo.png" alt="GearHub Logo" class="h-14 w-auto"/>
-                </a>
-                <a href="{{ route('home') }}" class="hidden sm:block" style="background: linear-gradient(135deg, #00d4ff, #8a2ce2); -webkit-background-clip: text; -webkit-text-fill-color: transparent; filter: drop-shadow(0 0 8px #00d4ff60);">GearHub</a>
+    <!-- Navigation Bar from Home -->
+    <header class="sticky top-0 z-50 w-full border-b border-primary/20 bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-md">
+        <div class="mx-auto flex max-w-7xl items-center justify-between px-4 py-3 sm:px-6 lg:px-8">
+            <!-- Logo -->
+            <div class="flex items-center gap-2">
+                <img src="/logo.png" alt="GearHub Logo" class="h-14 w-auto"/>
+                <span class="hidden text-xl font-black tracking-tighter sm:block" style="background: linear-gradient(135deg, #00d4ff, #8a2ce2); -webkit-background-clip: text; -webkit-text-fill-color: transparent; filter: drop-shadow(0 0 8px #00d4ff60);">GearHub</span>
             </div>
-            <div class="hidden md:flex items-center space-x-8">
-                <a class="text-[#ca98ff] font-bold border-b-2 border-[#ca98ff] pb-1" href="{{ route('produits.index') }}">Hardware</a>
-                <a class="text-[#adaaaa] hover:text-white transition-colors" href="#">Gear</a>
-                <a class="text-[#adaaaa] hover:text-white transition-colors" href="#">Deals</a>
-                <a class="text-[#adaaaa] hover:text-white transition-colors" href="#">Support</a>
-            </div>
-            <div class="flex items-center space-x-6">
-                <form method="GET" action="{{ route('produits.index') }}" class="relative hidden lg:block">
-                    <input name="search" value="{{ request('search') }}" class="bg-surface-container-highest border-none rounded-xl px-4 py-2 text-sm w-64 focus:ring-2 focus:ring-primary/50 text-on-surface placeholder-on-surface-variant/50" placeholder="Search products..." type="text"/>
-                    <button type="submit"><span class="material-symbols-outlined absolute right-3 top-2 text-on-surface-variant text-xl">search</span></button>
-                </form>
-                <div class="flex items-center space-x-4">
-                    @auth
-                        <span class="text-sm text-on-surface-variant">{{ Auth::user()->nom }}</span>
+
+            <!-- Search Bar -->
+            <form method="GET" action="{{ route('produits.index') }}" class="mx-4 flex flex-1 max-w-md">
+                <div class="relative w-full">
+                    <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 dark:text-slate-500">search</span>
+                    <input name="search" class="w-full rounded-full border-none bg-slate-200 py-2 pl-10 pr-4 text-sm focus:ring-2 focus:ring-primary dark:bg-surface-light dark:text-slate-100" placeholder="Search gear..." type="text" value="{{ request('search') }}"/>
+                </div>
+            </form>
+
+            <!-- Actions -->
+            <div class="flex items-center gap-2 sm:gap-4">
+                <nav class="hidden md:flex items-center gap-6 mr-4">
+                    <a class="text-sm font-semibold hover:text-primary transition-colors" href="{{ route('produits.index') }}">Shop</a>
+                    <a class="text-sm font-semibold hover:text-primary transition-colors" href="#">Community</a>
+                </nav>
+
+                @auth
+                    <a href="{{ route('cart.index') }}" class="relative flex h-10 w-10 items-center justify-center rounded-lg bg-slate-200 hover:bg-slate-300 dark:bg-surface-light dark:hover:bg-primary/20 transition-all">
+                        <span class="material-symbols-outlined">shopping_cart</span>
+                        @php $cartCount = count(session('cart', [])); @endphp
+                        @if ($cartCount > 0)
+                            <span class="absolute -top-1 -right-1 flex h-4 w-4 items-center justify-center rounded-full bg-primary text-[10px] font-bold text-white">{{ $cartCount }}</span>
+                        @endif
+                    </a>
+                    <div class="hidden sm:flex items-center gap-2">
+                        <a href="{{ route('profil.edit') }}" class="text-sm font-semibold hover:text-primary transition-colors">{{ Auth::user()->nom }}</a>
                         <form action="{{ route('logout') }}" method="POST">
                             @csrf
-                            <button class="hover:bg-[#ca98ff]/10 p-2 rounded-full transition-all duration-300">
-                                <span class="material-symbols-outlined text-[#ca98ff]">logout</span>
-                            </button>
+                            <button class="h-10 items-center justify-center rounded-lg bg-primary px-5 text-sm font-bold text-white shadow-lg shadow-primary/30 hover:brightness-110 flex">Logout</button>
                         </form>
-                    @else
-                        <a href="{{ route('login') }}" class="border border-[#ca98ff]/50 text-[#ca98ff] px-4 py-2 rounded-lg text-sm font-bold hover:bg-[#ca98ff]/10 transition-all">Login</a>
-                        <a href="{{ route('register') }}" class="bg-[#8a2ce2] text-white px-4 py-2 rounded-lg text-sm font-bold hover:brightness-110 transition-all">Register</a>
-                    @endauth
-                </div>
+                    </div>
+                @else
+                    <a href="{{ route('cart.index') }}" class="relative flex h-10 w-10 items-center justify-center rounded-lg bg-slate-200 hover:bg-slate-300 dark:bg-surface-light dark:hover:bg-primary/20 transition-all">
+                        <span class="material-symbols-outlined">shopping_cart</span>
+                    </a>
+                    <a href="{{ route('login') }}" class="hidden h-10 items-center justify-center rounded-lg border border-primary/50 px-5 text-sm font-bold text-primary hover:bg-primary/10 transition-all sm:flex">Login</a>
+                    <a href="{{ route('register') }}" class="hidden h-10 items-center justify-center rounded-lg bg-primary px-5 text-sm font-bold text-white shadow-lg shadow-primary/30 hover:brightness-110 transition-all sm:flex">Register</a>
+                    <a href="{{ route('login') }}" class="flex h-10 w-10 items-center justify-center rounded-lg bg-slate-200 dark:bg-surface-light sm:hidden">
+                        <span class="material-symbols-outlined">person</span>
+                    </a>
+                @endauth
             </div>
         </div>
-    </nav>
+    </header>
 
     <div class="flex min-h-screen pt-24">
 
