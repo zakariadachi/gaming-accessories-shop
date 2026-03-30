@@ -7,8 +7,10 @@ use App\Http\Controllers\ProfilController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect()->route('home');
 });
+
+Route::get('/home', [\App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 Route::get('/produits', [ProduitController::class, 'index'])->name('produits.index');
 Route::get('/produits/{produit}', [ProduitController::class, 'show'])->name('produits.show');
