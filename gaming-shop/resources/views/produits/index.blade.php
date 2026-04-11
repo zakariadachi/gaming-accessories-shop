@@ -61,7 +61,7 @@
             @else
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
                     @foreach ($produits as $produit)
-                        <div class="group relative bg-surface-container rounded-xl overflow-hidden hover:translate-y-[-4px] transition-all duration-300">
+                        <div class="group relative bg-surface-container rounded-xl overflow-hidden hover:translate-y-[-4px] transition-all duration-300 flex flex-col">
                             <a href="{{ route('produits.show', $produit) }}">
                                 <div class="aspect-square bg-surface-container-high relative overflow-hidden">
                                     @if ($produit->image)
@@ -78,23 +78,21 @@
                                     @endif
                                 </div>
                             </a>
-                            <div class="p-6">
-                                <div class="flex justify-between items-start mb-2">
-                                    <a href="{{ route('produits.show', $produit) }}">
-                                        <h3 class="font-headline font-bold text-lg leading-tight hover:text-primary transition-colors">{{ $produit->nom }}</h3>
-                                    </a>
-                                    <span class="text-primary text-xs font-bold font-headline whitespace-nowrap ml-2">{{ number_format($produit->prix, 2) }} €</span>
-                                </div>
-                                <p class="text-on-surface-variant text-xs mb-6 font-body">{{ $produit->categorie->nom }}</p>
+                            <div class="p-6 flex flex-col flex-1">
+                                <span class="text-on-surface-variant text-xs font-body mb-1">{{ $produit->categorie->nom }}</span>
+                                <a href="{{ route('produits.show', $produit) }}">
+                                    <h3 class="font-headline font-bold text-lg leading-tight hover:text-primary transition-colors mb-2">{{ $produit->nom }}</h3>
+                                </a>
+                                <span class="text-primary font-bold font-headline text-lg mb-4">{{ number_format($produit->prix, 2) }} €</span>
                                 @if ($produit->stock > 0)
-                                    <form action="{{ route('cart.add', $produit) }}" method="POST">
+                                    <form action="{{ route('cart.add', $produit) }}" method="POST" class="mt-auto">
                                         @csrf
-                                        <button type="submit" class="w-full py-3 bg-gradient-to-r from-primary to-primary-dim text-on-primary font-bold text-xs uppercase tracking-widest rounded-xl hover:opacity-90 active:scale-95 transition-all">
+                                        <button type="submit" class="w-full py-3 bg-gradient-to-r from-primary to-primary-dim text-white font-bold text-xs uppercase tracking-widest rounded-xl hover:opacity-90 active:scale-95 transition-all">
                                             Add to Cart
                                         </button>
                                     </form>
                                 @else
-                                    <button disabled class="w-full py-3 bg-surface-container-highest text-on-surface-variant font-bold text-xs uppercase tracking-widest rounded-xl opacity-40 cursor-not-allowed">
+                                    <button disabled class="mt-auto w-full py-3 bg-surface-container-highest text-on-surface-variant font-bold text-xs uppercase tracking-widest rounded-xl opacity-40 cursor-not-allowed">
                                         Indisponible
                                     </button>
                                 @endif
