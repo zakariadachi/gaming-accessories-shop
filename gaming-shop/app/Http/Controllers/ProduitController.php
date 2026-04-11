@@ -20,6 +20,13 @@ class ProduitController extends Controller
             $query->where('nom', 'like', '%' . $request->search . '%');
         }
 
+        match($request->input('tri')) {
+            'prix_asc'  => $query->orderBy('prix', 'asc'),
+            'prix_desc' => $query->orderBy('prix', 'desc'),
+            'nom_asc'   => $query->orderBy('nom', 'asc'),
+            default     => $query->latest(),
+        };
+
         $produits   = $query->paginate(12);
         $categories = Categorie::all();
 
