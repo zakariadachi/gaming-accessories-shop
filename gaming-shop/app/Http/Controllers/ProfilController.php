@@ -18,7 +18,6 @@ class ProfilController extends Controller
 
     public function updateInfos(Request $request): RedirectResponse
     {
-        /** @var User $user */
         $user = Auth::user();
 
         $request->validate([
@@ -41,7 +40,6 @@ class ProfilController extends Controller
             'password'         => ['required', 'string', 'min:8', 'confirmed'],
         ]);
 
-        /** @var User $user */
         $user = Auth::user();
 
         if (!Hash::check($request->current_password, $user->password)) {
