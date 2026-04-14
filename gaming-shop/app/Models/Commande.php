@@ -15,12 +15,20 @@ class Commande extends Model
 
     protected $fillable = [
         'date',
+        'statut',
         'user_id',
     ];
 
     protected $casts = [
         'date' => 'date',
     ];
+
+    const STATUTS = ['en_attente', 'confirmée', 'expédiée', 'livrée', 'annulée'];
+
+    public function total(): float
+    {
+        return $this->ligneCommandes->sum(fn($l) => $l->produit->prix * $l->quantity);
+    }
 
     public function user(): BelongsTo
     {
