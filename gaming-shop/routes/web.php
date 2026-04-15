@@ -7,6 +7,7 @@ use App\Http\Controllers\ProduitController;
 use App\Http\Controllers\ProfilController;
 use App\Http\Controllers\Admin\AdminDashboardController;
 use App\Http\Controllers\Admin\AdminProduitController;
+use App\Http\Controllers\Admin\AdminCategorieController;
 use App\Http\Controllers\Admin\AdminCommandeController;
 use Illuminate\Support\Facades\Route;
 
@@ -25,9 +26,7 @@ Route::middleware('guest')->group(function () {
     Route::post('/login', [AuthController::class, 'login']);
 });
 
-Route::middleware('auth')->group(function () {
-    Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
-
+Route::middleware(['auth', 'isClient'])->group(function () {
     Route::get('/profil', [ProfilController::class, 'edit'])->name('profil.edit');
     Route::put('/profil/infos', [ProfilController::class, 'updateInfos'])->name('profil.infos');
     Route::put('/profil/password', [ProfilController::class, 'updatePassword'])->name('profil.password');
@@ -43,11 +42,20 @@ Route::middleware('auth')->group(function () {
     Route::get('/commandes/{commande}', [CommandeController::class, 'show'])->name('commandes.show');
 });
 
+Route::middleware('auth')->group(function () {
+    Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+});
+
 // Routes Admin
 Route::prefix('admin')->name('admin.')->middleware(['auth', 'isAdmin'])->group(function () {
     Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name('dashboard');
 
     Route::resource('produits', AdminProduitController::class);
+
+    Route::get('/categories', [AdminCategorieController::class, 'index'])->name('categories.index');
+    Route::post('/categories', [AdminCategorieController::class, 'store'])->name('categories.store');
+    Route::put('/categories/{categorie}', [AdminCategorieController::class, 'update'])->name('categories.update');
+    Route::delete('/categories/{categorie}', [AdminCategorieController::class, 'destroy'])->name('categories.destroy');
 
     Route::get('/commandes', [AdminCommandeController::class, 'index'])->name('commandes.index');
     Route::patch('/commandes/{commande}/statut', [AdminCommandeController::class, 'updateStatut'])->name('commandes.statut');
