@@ -40,85 +40,91 @@
             display: inline-block; line-height: 1;
         }
         body { background-color: #0e0e0e; color: #ffffff; font-family: 'Manrope', sans-serif; }
-        .sidebar-link { @apply flex items-center gap-3 px-4 py-3 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-white transition-all text-sm font-medium; }
-        .sidebar-link.active { @apply bg-primary/20 text-primary border-l-4 border-primary; }
+        .sidebar-link { display: flex; align-items: center; gap: 0.75rem; padding: 0.6rem 0.75rem; border-radius: 0.75rem; color: rgba(255,255,255,0.45); font-size: 0.875rem; font-weight: 500; transition: all 0.2s; text-decoration: none; }
+        .sidebar-link:hover { background: rgba(138,44,226,0.1); color: rgba(255,255,255,0.9); transform: translateX(2px); }
+        .sidebar-link.active { background: rgba(138,44,226,0.2); color: #ca98ff; border-left: 3px solid #8a2ce2; padding-left: calc(0.75rem - 3px); font-weight: 600; }
+        .sidebar-link.active .material-symbols-outlined { font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
     </style>
     @stack('styles')
 </head>
 <body class="min-h-screen flex">
 
     <!-- Sidebar -->
-    <aside class="fixed left-0 top-0 h-full w-64 bg-surface-container border-r border-white/5 flex flex-col z-40">
+    <aside class="fixed left-0 top-0 h-full w-64 flex flex-col z-40" style="background: linear-gradient(180deg, #0e0e0e 0%, #130d1a 100%); border-right: 1px solid rgba(138,44,226,0.15);">
 
         <!-- Logo -->
-        <div class="px-6 py-5 border-b border-white/5">
-            <a href="{{ route('home') }}" class="flex items-center gap-2">
-                <img src="/logo.png" alt="GearHub" class="h-10 w-auto"/>
+        <div class="px-6 py-6" style="border-bottom: 1px solid rgba(138,44,226,0.15);">
+            <a href="{{ route('home') }}" class="flex items-center gap-3">
+                <div class="w-9 h-9 rounded-xl flex items-center justify-center" style="background: linear-gradient(135deg, #8a2ce2, #00d4ff);">
+                    <span class="material-symbols-outlined text-white text-lg">sports_esports</span>
+                </div>
                 <div>
-                    <p class="text-xs font-black tracking-widest uppercase" style="background: linear-gradient(135deg, #00d4ff, #8a2ce2); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;">GearHub</p>
-                    <p class="text-[10px] text-on-surface-variant uppercase tracking-widest">Admin Panel</p>
+                    <p class="text-sm font-black tracking-widest uppercase" style="background: linear-gradient(135deg, #00d4ff, #8a2ce2); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;">GearHub</p>
+                    <p class="text-[10px] uppercase tracking-widest" style="color: rgba(138,44,226,0.7);">Admin Panel</p>
                 </div>
             </a>
         </div>
 
         <!-- Nav Links -->
-        <nav class="flex-1 px-3 py-4 space-y-1 overflow-y-auto">
-            <p class="text-[10px] font-bold uppercase tracking-widest text-on-surface-variant px-4 mb-2">Général</p>
+        <nav class="flex-1 px-3 py-5 space-y-1 overflow-y-auto">
 
-            <a href="{{ route('admin.dashboard') }}"
-               class="sidebar-link {{ request()->routeIs('admin.dashboard') ? 'active' : '' }}">
-                <span class="material-symbols-outlined text-xl">dashboard</span>
-                Dashboard
+            <!-- Général -->
+            <p class="text-[9px] font-black uppercase tracking-[0.2em] px-3 mb-3" style="color: rgba(255,255,255,0.25);">Général</p>
+
+            <a href="{{ route('admin.dashboard') }}" class="sidebar-link {{ request()->routeIs('admin.dashboard') ? 'active' : '' }}">
+                <span class="material-symbols-outlined text-lg">dashboard</span>
+                <span>Dashboard</span>
             </a>
 
-            <p class="text-[10px] font-bold uppercase tracking-widest text-on-surface-variant px-4 mt-4 mb-2">Catalogue</p>
+            <!-- Catalogue -->
+            <p class="text-[9px] font-black uppercase tracking-[0.2em] px-3 mt-5 mb-3" style="color: rgba(255,255,255,0.25);">Catalogue</p>
 
-            <a href="{{ route('admin.produits.index') }}"
-               class="sidebar-link {{ request()->routeIs('admin.produits.*') ? 'active' : '' }}">
-                <span class="material-symbols-outlined text-xl">inventory_2</span>
-                Produits
+            <a href="{{ route('admin.produits.index') }}" class="sidebar-link {{ request()->routeIs('admin.produits.*') ? 'active' : '' }}">
+                <span class="material-symbols-outlined text-lg">inventory_2</span>
+                <span>Produits</span>
             </a>
 
-            <a href="{{ route('admin.categories.index') }}"
-               class="sidebar-link {{ request()->routeIs('admin.categories.*') ? 'active' : '' }}">
-                <span class="material-symbols-outlined text-xl">category</span>
-                Catégories
+            <a href="{{ route('admin.categories.index') }}" class="sidebar-link {{ request()->routeIs('admin.categories.*') ? 'active' : '' }}">
+                <span class="material-symbols-outlined text-lg">category</span>
+                <span>Catégories</span>
             </a>
 
-            <p class="text-[10px] font-bold uppercase tracking-widest text-on-surface-variant px-4 mt-4 mb-2">Ventes</p>
+            <!-- Ventes -->
+            <p class="text-[9px] font-black uppercase tracking-[0.2em] px-3 mt-5 mb-3" style="color: rgba(255,255,255,0.25);">Ventes</p>
 
-            <a href="{{ route('admin.commandes.index') }}"
-               class="sidebar-link {{ request()->routeIs('admin.commandes.*') ? 'active' : '' }}">
-                <span class="material-symbols-outlined text-xl">receipt_long</span>
-                Commandes
+            <a href="{{ route('admin.commandes.index') }}" class="sidebar-link {{ request()->routeIs('admin.commandes.*') ? 'active' : '' }}">
+                <span class="material-symbols-outlined text-lg">receipt_long</span>
+                <span>Commandes</span>
             </a>
+
         </nav>
 
         <!-- User Info -->
-        <div class="px-4 py-4 border-t border-white/5">
+        <div class="px-4 py-4 mx-3 mb-4 rounded-2xl" style="background: rgba(138,44,226,0.08); border: 1px solid rgba(138,44,226,0.2);">
             <div class="flex items-center gap-3 mb-3">
-                <div class="w-8 h-8 rounded-full bg-primary/30 flex items-center justify-center text-sm font-black text-primary">
+                <div class="w-9 h-9 rounded-xl flex items-center justify-center text-sm font-black" style="background: linear-gradient(135deg, #8a2ce2, #00d4ff); color: white;">
                     {{ strtoupper(substr(Auth::user()->nom, 0, 1)) }}
                 </div>
-                <div>
-                    <p class="text-sm font-semibold">{{ Auth::user()->nom }}</p>
-                    <p class="text-[10px] text-on-surface-variant uppercase tracking-widest">Administrateur</p>
+                <div class="flex-1 min-w-0">
+                    <p class="text-sm font-bold truncate">{{ Auth::user()->nom }}</p>
+                    <p class="text-[10px] uppercase tracking-widest" style="color: rgba(138,44,226,0.8);">Administrateur</p>
                 </div>
             </div>
             <div class="flex gap-2">
-                <a href="{{ route('home') }}" class="flex-1 flex items-center justify-center gap-1 py-2 rounded-lg bg-surface-container-high hover:bg-surface-container-highest text-xs text-on-surface-variant hover:text-white transition-all">
-                    <span class="material-symbols-outlined text-sm">storefront</span>
-                    Site
+                <a href="{{ route('profil.edit') }}" class="flex-1 flex items-center justify-center gap-1 py-2 rounded-xl text-xs font-semibold transition-all" style="background: rgba(255,255,255,0.05); color: #adaaaa;" onmouseover="this.style.background='rgba(255,255,255,0.1)'" onmouseout="this.style.background='rgba(255,255,255,0.05)'">
+                    <span class="material-symbols-outlined text-sm">person</span>
+                    Profil
                 </a>
                 <form action="{{ route('logout') }}" method="POST" class="flex-1">
                     @csrf
-                    <button type="submit" class="w-full flex items-center justify-center gap-1 py-2 rounded-lg bg-error/10 hover:bg-error/20 text-xs text-error transition-all">
+                    <button type="submit" class="w-full flex items-center justify-center gap-1 py-2 rounded-xl text-xs font-semibold transition-all" style="background: rgba(255,110,132,0.1); color: #ff6e84;" onmouseover="this.style.background='rgba(255,110,132,0.2)'" onmouseout="this.style.background='rgba(255,110,132,0.1)'">
                         <span class="material-symbols-outlined text-sm">logout</span>
                         Logout
                     </button>
                 </form>
             </div>
         </div>
+
     </aside>
 
     <!-- Main Content -->
