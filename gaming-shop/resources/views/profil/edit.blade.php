@@ -1,6 +1,7 @@
-@extends('layouts.main')
+@extends(Auth::user()->isAdmin() ? 'layouts.admin' : 'layouts.main')
 
 @section('title', 'Mon Profil - GearHub')
+@section('page-title', 'Mon Profil')
 
 @section('content')
 
