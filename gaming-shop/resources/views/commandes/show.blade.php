@@ -22,11 +22,9 @@
 
         @php
             $statuts = [
-                'en_attente' => ['label' => 'En attente',  'color' => '#ffaa00', 'icon' => 'schedule'],
-                'confirmée'  => ['label' => 'Confirmée',   'color' => '#00d4ff', 'icon' => 'check_circle'],
-                'expédiée'   => ['label' => 'Expédiée',    'color' => '#8a2ce2', 'icon' => 'local_shipping'],
-                'livrée'     => ['label' => 'Livrée',      'color' => '#00e676', 'icon' => 'inventory'],
-                'annulée'    => ['label' => 'Annulée',     'color' => '#ff3d71', 'icon' => 'cancel'],
+                'en_attente' => ['label' => 'En attente', 'color' => '#ffaa00', 'icon' => 'schedule'],
+                'confirmée'  => ['label' => 'Confirmée',  'color' => '#00d4ff', 'icon' => 'check_circle'],
+                'annulée'    => ['label' => 'Annulée',    'color' => '#ff3d71', 'icon' => 'cancel'],
             ];
             $statut = $statuts[$commande->statut] ?? ['label' => $commande->statut, 'color' => '#6b6b9a', 'icon' => 'info'];
         @endphp

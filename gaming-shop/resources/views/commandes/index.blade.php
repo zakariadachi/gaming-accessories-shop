@@ -59,11 +59,9 @@
 
                         @php
                             $statuts = [
-                                'en_attente' => ['label' => 'En attente',  'color' => '#ffaa00'],
-                                'confirmée'  => ['label' => 'Confirmée',   'color' => '#00d4ff'],
-                                'expédiée'   => ['label' => 'Expédiée',    'color' => '#8a2ce2'],
-                                'livrée'     => ['label' => 'Livrée',      'color' => '#00e676'],
-                                'annulée'    => ['label' => 'Annulée',     'color' => '#ff3d71'],
+                                'en_attente' => ['label' => 'En attente', 'color' => '#ffaa00'],
+                                'confirmée'  => ['label' => 'Confirmée',  'color' => '#00d4ff'],
+                                'annulée'    => ['label' => 'Annulée',    'color' => '#ff3d71'],
                             ];
                             $statut = $statuts[$commande->statut] ?? ['label' => $commande->statut, 'color' => '#6b6b9a'];
                         @endphp
