@@ -42,7 +42,18 @@ class AuthController extends Controller
             ]);
         }
 
+        if (Auth::user()->is_banned) {
+            Auth::logout();
+            throw ValidationException::withMessages([
+                'email' => ['Votre compte a été banni. Contactez l\'administrateur.'],
+            ]);
+        }
+
         $request->session()->regenerate();
+
+        if (Auth::user()->isAdmin()) {
+            return redirect()->route('admin.dashboard');
+        }
 
         return redirect()->intended(route('home'));
     }
