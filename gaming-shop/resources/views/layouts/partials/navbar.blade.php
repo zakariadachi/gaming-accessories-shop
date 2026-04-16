@@ -22,7 +22,7 @@
         <div class="flex items-center gap-2 sm:gap-4">
             <nav class="hidden md:flex items-center gap-6 mr-4">
                 <a class="text-sm font-semibold hover:text-primary transition-colors {{ request()->routeIs('produits.*') ? 'text-primary' : '' }}" href="{{ route('produits.index') }}">Shop</a>
-                <a class="text-sm font-semibold hover:text-primary transition-colors {{ request()->routeIs('communaute.*') ? 'text-primary' : '' }}" href="{{ route('communaute.index') }}">Community</a>
+                <a class="text-sm font-semibold hover:text-primary transition-colors" href="#">Community</a>
             </nav>
 
             @auth
