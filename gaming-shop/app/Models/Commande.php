@@ -23,7 +23,7 @@ class Commande extends Model
         'date' => 'date',
     ];
 
-    const STATUTS = ['en_attente', 'confirmée', 'expédiée', 'livrée', 'annulée'];
+    const STATUTS = ['en_attente', 'confirmée', 'annulée'];
 
     public function total(): float
     {
