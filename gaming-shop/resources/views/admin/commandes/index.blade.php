@@ -11,8 +11,6 @@
             $statuts = [
                 'en_attente' => ['label' => 'En attente', 'color' => '#ffaa00', 'icon' => 'schedule'],
                 'confirmée'  => ['label' => 'Confirmée',  'color' => '#00d4ff', 'icon' => 'check_circle'],
-                'expédiée'   => ['label' => 'Expédiée',   'color' => '#8a2ce2', 'icon' => 'local_shipping'],
-                'livrée'     => ['label' => 'Livrée',     'color' => '#00e676', 'icon' => 'inventory'],
                 'annulée'    => ['label' => 'Annulée',    'color' => '#ff3d71', 'icon' => 'cancel'],
             ];
         @endphp
@@ -51,7 +49,9 @@
                     @forelse ($commandes as $commande)
                         @php $s = $statuts[$commande->statut] ?? ['label' => $commande->statut, 'color' => '#6b6b9a']; @endphp
                         <tr class="hover:bg-white/5 transition-colors">
-                            <td class="px-6 py-4 font-black text-white">#{{ $commande->id }}</td>
+                            <td class="px-6 py-4 font-black text-white">
+                                <a href="{{ route('admin.commandes.show', $commande) }}" class="hover:text-[#00d4ff] transition-colors">#{{ $commande->id }}</a>
+                            </td>
                             <td class="px-6 py-4">
                                 <div class="flex items-center gap-2">
                                     <div class="w-8 h-8 rounded-full flex items-center justify-center text-xs font-black text-white flex-shrink-0"
