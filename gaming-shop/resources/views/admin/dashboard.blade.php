@@ -52,7 +52,7 @@
         <div class="bg-surface-container rounded-xl p-6">
             <div class="flex items-center justify-between mb-4">
                 <h2 class="font-bold font-headline text-lg">Dernières commandes</h2>
-                <!-- <a href="{{ route('admin.commandes.index') }}" class="text-xs text-primary hover:underline">Voir tout</a> -->
+                <a href="{{ route('admin.commandes.index') }}" class="text-xs text-primary hover:underline">Voir tout</a>
             </div>
 
             @if($dernieres_commandes->isEmpty())
