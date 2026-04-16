@@ -28,4 +28,11 @@ class AdminCommandeController extends Controller
 
         return back()->with('success', 'Statut de la commande #' . $commande->id . ' mis à jour.');
     }
+
+    public function show(Commande $commande)
+    {
+        $commande->load('user', 'ligneCommandes.produit.categorie');
+
+        return view('admin.commandes.show', compact('commande'));
+    }
 }
