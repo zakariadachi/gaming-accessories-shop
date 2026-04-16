@@ -97,6 +97,14 @@
                 <span>Commandes</span>
             </a>
 
+            <!-- Utilisateurs -->
+            <p class="text-[9px] font-black uppercase tracking-[0.2em] px-3 mt-5 mb-3" style="color: rgba(255,255,255,0.25);">Utilisateurs</p>
+
+            <a href="{{ route('admin.users.index') }}" class="sidebar-link {{ request()->routeIs('admin.users.*') ? 'active' : '' }}">
+                <span class="material-symbols-outlined text-lg">group</span>
+                <span>Membres</span>
+            </a>
+
         </nav>
 
         <!-- User Info -->
