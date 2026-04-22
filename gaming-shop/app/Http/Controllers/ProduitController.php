@@ -37,11 +37,19 @@ class ProduitController extends Controller
     {
         $produit->load('categorie');
 
+        $reviews = $produit->reviews()->with('user')->latest()->paginate(5);
+
         $similaires = Produit::where('categorie_id', $produit->categorie_id)
             ->where('id', '!=', $produit->id)
             ->limit(4)
             ->get();
 
-        return view('produits.show', compact('produit', 'similaires'));
+        $aAchete = auth()->check() && auth()->user()->commandes()
+            ->whereHas('ligneCommandes', fn($q) => $q->where('produit_id', $produit->id))
+            ->exists();
+
+        $aDejaAvis = auth()->check() && $produit->reviews()->where('user_id', auth()->id())->exists();
+
+        return view('produits.show', compact('produit', 'reviews', 'similaires', 'aAchete', 'aDejaAvis'));
     }
 }
