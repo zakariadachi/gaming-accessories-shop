@@ -21,6 +21,7 @@ Route::get('/home', [\App\Http\Controllers\HomeController::class, 'index'])->mid
 Route::middleware('isClient')->group(function () {
     Route::get('/produits', [ProduitController::class, 'index'])->name('produits.index');
     Route::get('/produits/{produit}', [ProduitController::class, 'show'])->name('produits.show');
+    Route::get('/communaute', fn() => view('communaute.index'))->name('communaute.index');
 });
 
 Route::middleware('guest')->group(function () {
