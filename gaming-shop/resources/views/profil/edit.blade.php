@@ -19,22 +19,41 @@
         </div>
 
         @if(!Auth::user()->isAdmin())
+        @php $niveau = Auth::user()->niveauFidelite(); @endphp
         <!-- Loyalty Points Card -->
-        <div class="mb-6 rounded-2xl p-6 flex items-center justify-between" style="background: linear-gradient(135deg, #1a0a2e, #0f0f23); border: 1px solid #8a2ce240;">
-            <div class="flex items-center gap-4">
-                <div class="w-14 h-14 rounded-2xl flex items-center justify-center" style="background: linear-gradient(135deg, #8a2ce2, #00d4ff);">
-                    <span class="material-symbols-outlined text-white text-2xl">stars</span>
+        <div class="mb-6 rounded-2xl p-6" style="background: linear-gradient(135deg, #1a0a2e, #0f0f23); border: 1px solid {{ $niveau['color'] }}40;">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center gap-4">
+                    <div class="w-14 h-14 rounded-2xl flex items-center justify-center" style="background: {{ $niveau['color'] }}20; border: 1px solid {{ $niveau['color'] }}40;">
+                        <span class="material-symbols-outlined text-2xl" style="color: {{ $niveau['color'] }}; font-variation-settings: 'FILL' 1;">{{ $niveau['icon'] }}</span>
+                    </div>
+                    <div>
+                        <span class="text-xs font-black uppercase tracking-widest px-2 py-0.5 rounded-full inline-block mb-1" style="background: {{ $niveau['color'] }}20; color: {{ $niveau['color'] }}; border: 1px solid {{ $niveau['color'] }}40;">
+                            {{ $niveau['label'] }}
+                        </span>
+                        <p class="text-3xl font-black" style="color: {{ $niveau['color'] }}">
+                            {{ number_format(Auth::user()->points) }} <span class="text-sm font-semibold">pts</span>
+                        </p>
+                    </div>
                 </div>
-                <div>
-                    <p class="text-xs font-bold uppercase tracking-widest text-on-surface-variant">Points de fidélité</p>
-                    <p class="text-3xl font-black" style="background: linear-gradient(135deg, #00d4ff, #8a2ce2); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;">
-                        {{ number_format(Auth::user()->points) }} pts
-                    </p>
+                <div class="text-right">
+                    <p class="text-xs text-on-surface-variant">1€ dépensé = 1 point</p>
+                    <p class="text-xs text-on-surface-variant mt-1">{{ Auth::user()->commandes()->count() }} commande(s)</p>
+                    @if(Auth::user()->points < 1000)
+                        @php
+                            $prochainNiveau = Auth::user()->points < 500 ? 500 : 1000;
+                            $progression = Auth::user()->points < 500
+                                ? (Auth::user()->points / 500) * 100
+                                : ((Auth::user()->points - 500) / 500) * 100;
+                        @endphp
+                        <p class="text-xs text-on-surface-variant mt-2">{{ $prochainNiveau - Auth::user()->points }} pts pour le niveau suivant</p>
+                        <div class="w-32 h-1.5 rounded-full mt-1" style="background: #1e1e3f;">
+                            <div class="h-full rounded-full" style="width: {{ min(100, $progression) }}%; background: {{ $niveau['color'] }};"></div>
+                        </div>
+                    @else
+                        <p class="text-xs mt-2" style="color: {{ $niveau['color'] }};">Niveau maximum 🌟</p>
+                    @endif
                 </div>
-            </div>
-            <div class="text-right">
-                <p class="text-xs text-on-surface-variant">1€ dépensé = 1 point</p>
-                <p class="text-xs text-on-surface-variant mt-1">{{ Auth::user()->commandes()->count() }} commande(s)</p>
             </div>
         </div>
         @endif
