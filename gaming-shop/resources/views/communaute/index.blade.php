@@ -14,7 +14,7 @@
         <div class="relative z-10">
             <span class="inline-block rounded-full px-4 py-1 text-xs font-bold uppercase tracking-widest mb-4"
                 style="background: #00d4ff15; border: 1px solid #00d4ff30; color: #00d4ff;">
-                GearHub Community
+                GearHub Communauté
             </span>
             <h1 class="text-5xl font-black tracking-tight text-white mb-4">
                 LA COMMUNAUTÉ <span style="background: linear-gradient(135deg, #00d4ff, #8a2ce2); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">GEARHUB</span>
