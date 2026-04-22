@@ -39,7 +39,7 @@ class CommandeSeeder extends Seeder
             ]);
 
             // Créer 2 commandes par client
-            foreach (['en_attente', 'confirmée'] as $statut) {
+            foreach (['confirmée', 'confirmée'] as $statut) {
                 $commande = Commande::create([
                     'user_id' => $client->id,
                     'date'    => now()->subDays(rand(1, 30)),
