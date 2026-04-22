@@ -175,7 +175,7 @@
                             @csrf
                             <button type="submit" class="w-full btn-primary flex items-center justify-center gap-2 rounded-xl py-4 font-bold text-white transition-all active:scale-95 hover:scale-105">
                                 <span class="material-symbols-outlined">credit_card</span>
-                                Payer avec Stripe
+                                Payer maintenant
                             </button>
                         </form>
 

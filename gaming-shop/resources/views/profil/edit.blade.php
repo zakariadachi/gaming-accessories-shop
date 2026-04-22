@@ -38,7 +38,6 @@
                 </div>
                 <div class="text-right">
                     <p class="text-xs text-on-surface-variant">1€ dépensé = 1 point</p>
-                    <p class="text-xs text-on-surface-variant mt-1">{{ Auth::user()->commandes()->count() }} commande(s)</p>
                     @if(Auth::user()->points < 1000)
                         @php
                             $prochainNiveau = Auth::user()->points < 500 ? 500 : 1000;

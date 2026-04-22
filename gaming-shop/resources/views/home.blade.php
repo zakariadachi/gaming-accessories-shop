@@ -27,7 +27,7 @@
                             style="background: linear-gradient(135deg, #00d4ff, #8a2ce2); box-shadow: 0 0 30px #00d4ff30;">
                             ACHETER
                         </a>
-                        <a href="#"
+                        <a href="{{ route('communaute.index') }}"
                             class="rounded-xl border px-8 py-4 text-base font-extrabold transition-colors hover:bg-[#00d4ff]/10"
                             style="border-color: #00d4ff50; color: #00d4ff;">
                             COMMUNAUTÉ
