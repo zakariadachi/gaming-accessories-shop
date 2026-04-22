@@ -66,4 +66,13 @@ class User extends Authenticatable
     {
         return $this->role === 'admin';
     }
+
+    public function niveauFidelite(): array
+    {
+        return match(true) {
+            $this->points >= 1000 => ['label' => 'Gold',   'color' => '#ffaa00', 'icon' => 'emoji_events'],
+            $this->points >= 500  => ['label' => 'Silver', 'color' => '#c0c0c0', 'icon' => 'military_tech'],
+            default               => ['label' => 'Bronze', 'color' => '#cd7f32', 'icon' => 'workspace_premium'],
+        };
+    }
 }
