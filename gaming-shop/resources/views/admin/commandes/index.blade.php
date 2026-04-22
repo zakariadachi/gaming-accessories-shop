@@ -18,7 +18,7 @@
             <div class="rounded-2xl p-4 text-center" style="background: #1a1a1a; border: 1px solid {{ $s['color'] }}30;">
                 <span class="material-symbols-outlined text-2xl mb-1 block" style="color: {{ $s['color'] }};">{{ $s['icon'] }}</span>
                 <div class="text-2xl font-black" style="color: {{ $s['color'] }};">
-                    {{ $commandes->where('statut', $key)->count() }}
+                    {{ $commandes->getCollection()->where('statut', $key)->count() }}
                 </div>
                 <div class="text-xs mt-1" style="color: #6b6b9a;">{{ $s['label'] }}</div>
             </div>
