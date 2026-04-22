@@ -50,7 +50,7 @@
 <body class="min-h-screen flex">
 
     <!-- Sidebar -->
-    <aside class="fixed left-0 top-0 h-full w-64 flex flex-col z-40" style="background: linear-gradient(180deg, #0e0e0e 0%, #130d1a 100%); border-right: 1px solid rgba(138,44,226,0.15);">
+    <aside id="sidebar" class="fixed left-0 top-0 h-full w-64 flex flex-col z-40 transition-transform duration-300 -translate-x-full md:translate-x-0" style="background: linear-gradient(180deg, #0e0e0e 0%, #130d1a 100%); border-right: 1px solid rgba(138,44,226,0.15);">
 
         <!-- Logo -->
         <div class="px-6 py-6" style="border-bottom: 1px solid rgba(138,44,226,0.15);">
@@ -127,7 +127,7 @@
                     @csrf
                     <button type="submit" class="w-full flex items-center justify-center gap-1 py-2 rounded-xl text-xs font-semibold transition-all" style="background: rgba(255,110,132,0.1); color: #ff6e84;" onmouseover="this.style.background='rgba(255,110,132,0.2)'" onmouseout="this.style.background='rgba(255,110,132,0.1)'">
                         <span class="material-symbols-outlined text-sm">logout</span>
-                        Logout
+                        Déconnexion
                     </button>
                 </form>
             </div>
@@ -135,15 +135,24 @@
 
     </aside>
 
+    <!-- Overlay mobile -->
+    <div id="sidebar-overlay" class="fixed inset-0 bg-black/60 z-30 hidden md:hidden" onclick="toggleSidebar()"></div>
+
     <!-- Main Content -->
-    <div class="flex-1 ml-64 flex flex-col min-h-screen">
+    <div class="flex-1 md:ml-64 flex flex-col min-h-screen">
 
         <!-- Top Bar -->
-        <header class="sticky top-0 z-30 w-full bg-[#0e0e0e]/80 backdrop-blur-md border-b border-white/5 px-8 py-4 flex items-center justify-between">
-            <h1 class="text-lg font-bold font-headline">@yield('page-title', 'Dashboard')</h1>
+        <header class="sticky top-0 z-30 w-full bg-[#0e0e0e]/80 backdrop-blur-md border-b border-white/5 px-4 md:px-8 py-4 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <!-- Burger button mobile -->
+                <button onclick="toggleSidebar()" class="md:hidden flex h-9 w-9 items-center justify-center rounded-lg border border-[#1e1e3f] bg-[#1a1a1a]">
+                    <span class="material-symbols-outlined text-[#8a2ce2] text-xl">menu</span>
+                </button>
+                <h1 class="text-lg font-bold font-headline">@yield('page-title', 'Dashboard')</h1>
+            </div>
             <div class="flex items-center gap-2 text-xs text-on-surface-variant">
                 <span class="material-symbols-outlined text-sm">admin_panel_settings</span>
-                <span>Admin Panel</span>
+                <span class="hidden sm:block">Panneau Admin</span>
             </div>
         </header>
 
@@ -162,11 +171,20 @@
         @endif
 
         <!-- Page Content -->
-        <main class="flex-1 px-8 py-6">
+        <main class="flex-1 px-4 md:px-8 py-6">
             @yield('content')
         </main>
 
     </div>
+
+    <script>
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('sidebar-overlay');
+            sidebar.classList.toggle('-translate-x-full');
+            overlay.classList.toggle('hidden');
+        }
+    </script>
 
     @stack('scripts')
 </body>
