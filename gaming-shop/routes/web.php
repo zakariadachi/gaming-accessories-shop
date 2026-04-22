@@ -3,8 +3,10 @@
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CommandeController;
+use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ProduitController;
 use App\Http\Controllers\ProfilController;
+use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\Admin\AdminDashboardController;
 use App\Http\Controllers\Admin\AdminProduitController;
 use App\Http\Controllers\Admin\AdminCategorieController;
@@ -14,10 +16,12 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', fn() => redirect()->route('home'));
 
-Route::get('/home', [\App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/home', [\App\Http\Controllers\HomeController::class, 'index'])->middleware('isClient')->name('home');
 
-Route::get('/produits', [ProduitController::class, 'index'])->name('produits.index');
-Route::get('/produits/{produit}', [ProduitController::class, 'show'])->name('produits.show');
+Route::middleware('isClient')->group(function () {
+    Route::get('/produits', [ProduitController::class, 'index'])->name('produits.index');
+    Route::get('/produits/{produit}', [ProduitController::class, 'show'])->name('produits.show');
+});
 
 Route::middleware('guest')->group(function () {
     Route::get('/register', fn() => view('auth.register'))->name('register');
@@ -41,6 +45,15 @@ Route::middleware(['auth', 'isClient'])->group(function () {
     Route::post('/commandes', [CommandeController::class, 'store'])->name('commandes.store');
     Route::get('/commandes', [CommandeController::class, 'index'])->name('commandes.index');
     Route::get('/commandes/{commande}', [CommandeController::class, 'show'])->name('commandes.show');
+
+    Route::post('/produits/{produit}/reviews', [ReviewController::class, 'store'])->name('reviews.store');
+    Route::put('/reviews/{review}', [ReviewController::class, 'update'])->name('reviews.update');
+    Route::delete('/reviews/{review}', [ReviewController::class, 'destroy'])->name('reviews.destroy');
+
+    Route::post('/payment/checkout', [PaymentController::class, 'checkout'])->name('payment.checkout');
+    Route::get('/payment/success', [PaymentController::class, 'success'])->name('payment.success');
+    Route::get('/payment/cancel', [PaymentController::class, 'cancel'])->name('payment.cancel');
+    Route::get('/payment/confirmation/{commande}', [PaymentController::class, 'confirmation'])->name('payment.confirmation');
 });
 
 Route::middleware('auth')->group(function () {
