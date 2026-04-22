@@ -20,7 +20,7 @@
                 </div>
             @endif
 
-            <form action="{{ route('admin.produits.store') }}" method="POST" class="space-y-5">
+            <form action="{{ route('admin.produits.store') }}" method="POST" enctype="multipart/form-data" class="space-y-5">
                 @csrf
                 @include('admin.produits._form')
                 <button type="submit" class="w-full py-3.5 bg-primary hover:brightness-110 text-white font-bold rounded-xl transition-all">
