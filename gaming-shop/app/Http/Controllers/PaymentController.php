@@ -83,7 +83,12 @@ class PaymentController extends Controller
 
         session()->forget('cart');
 
-        return redirect()->route('payment.confirmation', $commande)->with('success', 'Paiement réussi ! Votre commande a été confirmée.');
+        // Ajouter les points de fidélité (1€ = 1 point)
+        $total = $commande->load('ligneCommandes.produit')->total();
+        $pointsGagnes = (int) floor($total);
+        Auth::user()->increment('points', $pointsGagnes);
+
+        return redirect()->route('payment.confirmation', $commande)->with('success', 'Paiement réussi ! Vous avez gagné ' . $pointsGagnes . ' points de fidélité 🎉');
     }
 
     public function cancel()
