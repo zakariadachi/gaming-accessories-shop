@@ -97,10 +97,10 @@
                 {{-- Liste des articles --}}
                 <div class="lg:col-span-2 space-y-4">
                     @foreach ($cart as $item)
-                        <div class="flex gap-4 bg-[#0f0f23] border border-[#1e1e3f] rounded-2xl p-4 hover:border-[#00d4ff]/30 transition-all">
+                        <div class="flex gap-3 bg-[#0f0f23] border border-[#1e1e3f] rounded-2xl p-3 md:p-4 hover:border-[#00d4ff]/30 transition-all">
 
                             {{-- Image --}}
-                            <a href="{{ route('produits.show', $item['id']) }}" class="w-24 h-24 rounded-xl overflow-hidden bg-[#1a1a35] flex-shrink-0">
+                            <a href="{{ route('produits.show', $item['id']) }}" class="w-16 h-16 md:w-24 md:h-24 rounded-xl overflow-hidden bg-[#1a1a35] flex-shrink-0">
                                 @if ($item['image'])
                                     <img src="{{ $item['image'] }}" alt="{{ $item['nom'] }}" class="w-full h-full object-cover"/>
                                 @else
@@ -112,9 +112,9 @@
 
                             {{-- Infos --}}
                             <div class="flex-1 flex flex-col justify-between">
-                                <div class="flex justify-between items-start">
-                                    <a href="{{ route('produits.show', $item['id']) }}" class="font-bold text-white hover:text-[#00d4ff] transition-colors">{{ $item['nom'] }}</a>
-                                    <span class="neon-text font-black text-lg ml-4">{{ number_format($item['prix'] * $item['quantity'], 2) }} €</span>
+                                <div class="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-1">
+                                    <a href="{{ route('produits.show', $item['id']) }}" class="font-bold text-white hover:text-[#00d4ff] transition-colors text-sm md:text-base">{{ $item['nom'] }}</a>
+                                    <span class="neon-text font-black text-base md:text-lg">{{ number_format($item['prix'] * $item['quantity'], 2) }} €</span>
                                 </div>
                                 <span class="text-xs text-[#6b6b9a]">{{ number_format($item['prix'], 2) }} € / unité</span>
 
@@ -171,11 +171,11 @@
                             <span class="text-2xl font-black neon-text">{{ number_format($total, 2) }} €</span>
                         </div>
 
-                        <form action="{{ route('commandes.store') }}" method="POST">
+                        <form action="{{ route('payment.checkout') }}" method="POST">
                             @csrf
                             <button type="submit" class="w-full btn-primary flex items-center justify-center gap-2 rounded-xl py-4 font-bold text-white transition-all active:scale-95 hover:scale-105">
-                                <span class="material-symbols-outlined">shopping_bag</span>
-                                Passer la commande
+                                <span class="material-symbols-outlined">credit_card</span>
+                                Payer avec Stripe
                             </button>
                         </form>
 
@@ -197,7 +197,7 @@
                 <img src="/logo.png" alt="GearHub" class="h-8 w-auto"/>
                 <span class="neon-text font-black text-lg">GearHub</span>
             </a>
-            <p class="text-xs text-[#6b6b9a]">© 2024 GearHub. All rights reserved.</p>
+            <p class="text-xs text-[#6b6b9a]">© 2024 GearHub. Tous droits réservés.</p>
         </div>
     </footer>
 
