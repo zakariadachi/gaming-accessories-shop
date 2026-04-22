@@ -18,6 +18,27 @@
             </div>
         </div>
 
+        @if(!Auth::user()->isAdmin())
+        <!-- Loyalty Points Card -->
+        <div class="mb-6 rounded-2xl p-6 flex items-center justify-between" style="background: linear-gradient(135deg, #1a0a2e, #0f0f23); border: 1px solid #8a2ce240;">
+            <div class="flex items-center gap-4">
+                <div class="w-14 h-14 rounded-2xl flex items-center justify-center" style="background: linear-gradient(135deg, #8a2ce2, #00d4ff);">
+                    <span class="material-symbols-outlined text-white text-2xl">stars</span>
+                </div>
+                <div>
+                    <p class="text-xs font-bold uppercase tracking-widest text-on-surface-variant">Points de fidélité</p>
+                    <p class="text-3xl font-black" style="background: linear-gradient(135deg, #00d4ff, #8a2ce2); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;">
+                        {{ number_format(Auth::user()->points) }} pts
+                    </p>
+                </div>
+            </div>
+            <div class="text-right">
+                <p class="text-xs text-on-surface-variant">1€ dépensé = 1 point</p>
+                <p class="text-xs text-on-surface-variant mt-1">{{ Auth::user()->commandes()->count() }} commande(s)</p>
+            </div>
+        </div>
+        @endif
+
         <div class="space-y-6">
 
             <!-- Personal Info Form -->
