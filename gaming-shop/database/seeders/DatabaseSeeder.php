@@ -12,6 +12,7 @@ class DatabaseSeeder extends Seeder
             CategorieSeeder::class,
             ProduitSeeder::class,
             CommandeSeeder::class,
+            ReviewSeeder::class,
         ]);
     }
 }
