@@ -22,15 +22,25 @@ class AdminProduitController extends Controller
         return view('admin.produits.create', compact('categories'));
     }
 
+    public function show(Produit $produit)
+    {
+        $produit->load('categorie', 'reviews.user');
+        return view('admin.produits.show', compact('produit'));
+    }
+
     public function store(Request $request): RedirectResponse
     {
         $data = $request->validate([
             'nom'          => ['required', 'string', 'max:255'],
             'prix'         => ['required', 'numeric', 'min:0'],
             'stock'        => ['required', 'integer', 'min:0'],
-            'image'        => ['nullable', 'url'],
+            'image'        => ['nullable', 'image', 'mimes:png,jpg,jpeg,webp', 'max:2048'],
             'categorie_id' => ['required', 'exists:categories,id'],
         ]);
+
+        if ($request->hasFile('image')) {
+            $data['image'] = $request->file('image')->store('produits', 'public');
+        }
 
         Produit::create($data);
 
@@ -49,9 +59,15 @@ class AdminProduitController extends Controller
             'nom'          => ['required', 'string', 'max:255'],
             'prix'         => ['required', 'numeric', 'min:0'],
             'stock'        => ['required', 'integer', 'min:0'],
-            'image'        => ['nullable', 'url'],
+            'image'        => ['nullable', 'image', 'mimes:png,jpg,jpeg,webp', 'max:2048'],
             'categorie_id' => ['required', 'exists:categories,id'],
         ]);
+
+        if ($request->hasFile('image')) {
+            $data['image'] = $request->file('image')->store('produits', 'public');
+        } else {
+            unset($data['image']);
+        }
 
         $produit->update($data);
 
