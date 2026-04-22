@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8"/>
     <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-    <title>Register | GamingSite</title>
+    <title>Inscription | GearHub</title>
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"/>
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
@@ -44,23 +44,23 @@
                         <path clip-rule="evenodd" d="M24 8.18819L33.4123 11.574L24 15.2071L14.5877 11.574L24 8.18819ZM9 15.8487L21 20.4805V37.6263L9 32.9945V15.8487ZM27 37.6263V20.4805L39 15.8487V32.9945L27 37.6263ZM25.354 2.29885C24.4788 1.98402 23.5212 1.98402 22.646 2.29885L4.98454 8.65208C3.7939 9.08038 3 10.2097 3 11.475V34.3663C3 36.0196 4.01719 37.5026 5.55962 38.098L22.9197 44.7987C23.6149 45.0671 24.3851 45.0671 25.0803 44.7987L42.4404 38.098C43.9828 37.5026 45 36.0196 45 34.3663V11.475C45 10.2097 44.2061 9.08038 43.0155 8.65208L25.354 2.29885Z" fill="currentColor" fill-rule="evenodd"></path>
                     </svg>
                 </div>
-                <span class="text-2xl font-black tracking-tight text-white uppercase">GamingSite</span>
+                <span class="text-2xl font-black tracking-tight text-white uppercase">GearHub</span>
             </div>
             <h1 class="text-white text-5xl xl:text-7xl font-black leading-tight tracking-tight mb-6">
-                Join the <span class="text-primary">Elite</span>
+                Rejoignez l'é<span class="text-primary">lite</span>
             </h1>
             <p class="text-slate-300 text-lg xl:text-xl leading-relaxed max-w-md">
-                Unlock exclusive hardware, digital assets, and high-performance gaming gear tailored for champions.
+                Découvrez du matériel exclusif et des accessoires gaming haute performance.
             </p>
             <div class="mt-12 flex gap-4">
                 <div class="flex flex-col">
                     <span class="text-primary font-bold text-2xl">50k+</span>
-                    <span class="text-slate-400 text-sm">Active Gamers</span>
+                    <span class="text-slate-400 text-sm">Gamers actifs</span>
                 </div>
                 <div class="w-px h-10 bg-slate-700"></div>
                 <div class="flex flex-col">
                     <span class="text-primary font-bold text-2xl">200+</span>
-                    <span class="text-slate-400 text-sm">Premium Brands</span>
+                    <span class="text-slate-400 text-sm">Marques premium</span>
                 </div>
             </div>
         </div>
@@ -75,12 +75,12 @@
                 <div class="text-primary">
                     <span class="material-symbols-outlined text-4xl">deployed_code</span>
                 </div>
-                <span class="text-xl font-black tracking-tight dark:text-white">GamingSite</span>
+                <span class="text-xl font-black tracking-tight dark:text-white">GearHub</span>
             </div>
 
             <div class="mb-10">
-                <h2 class="text-3xl font-bold tracking-tight text-slate-900 dark:text-white mb-2">Create Your Account</h2>
-                <p class="text-slate-600 dark:text-slate-400">Enter your details to start your gaming journey.</p>
+                <h2 class="text-3xl font-bold tracking-tight text-slate-900 dark:text-white mb-2">Créer votre compte</h2>
+                <p class="text-slate-600 dark:text-slate-400">Entrez vos informations pour commencer.</p>
             </div>
 
             {{-- Erreurs de validation --}}
@@ -96,7 +96,7 @@
                 @csrf
 
                 <div class="flex flex-col gap-2">
-                    <label class="text-sm font-semibold text-slate-700 dark:text-slate-300 ml-1">Full Name</label>
+                    <label class="text-sm font-semibold text-slate-700 dark:text-slate-300 ml-1">Nom complet</label>
                     <div class="relative">
                         <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-slate-500 dark:text-slate-400 text-xl">person</span>
                         <input name="nom" value="{{ old('nom') }}" class="w-full pl-12 pr-4 py-3.5 rounded-xl border border-slate-200 dark:border-primary/20 bg-white dark:bg-primary/5 focus:ring-2 focus:ring-primary/50 focus:border-primary outline-none transition-all dark:text-white placeholder:text-slate-400 dark:placeholder:text-slate-600" placeholder="Alex Sterling" type="text"/>
@@ -104,7 +104,7 @@
                 </div>
 
                 <div class="flex flex-col gap-2">
-                    <label class="text-sm font-semibold text-slate-700 dark:text-slate-300 ml-1">Email Address</label>
+                    <label class="text-sm font-semibold text-slate-700 dark:text-slate-300 ml-1">Adresse Email</label>
                     <div class="relative">
                         <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-slate-500 dark:text-slate-400 text-xl">mail</span>
                         <input name="email" value="{{ old('email') }}" class="w-full pl-12 pr-4 py-3.5 rounded-xl border border-slate-200 dark:border-primary/20 bg-white dark:bg-primary/5 focus:ring-2 focus:ring-primary/50 focus:border-primary outline-none transition-all dark:text-white placeholder:text-slate-400 dark:placeholder:text-slate-600" placeholder="alex@gamingsite.com" type="email"/>
@@ -113,14 +113,14 @@
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div class="flex flex-col gap-2">
-                        <label class="text-sm font-semibold text-slate-700 dark:text-slate-300 ml-1">Password</label>
+                        <label class="text-sm font-semibold text-slate-700 dark:text-slate-300 ml-1">Mot de passe</label>
                         <div class="relative">
                             <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-slate-500 dark:text-slate-400 text-xl">lock</span>
                             <input name="password" class="w-full pl-12 pr-4 py-3.5 rounded-xl border border-slate-200 dark:border-primary/20 bg-white dark:bg-primary/5 focus:ring-2 focus:ring-primary/50 focus:border-primary outline-none transition-all dark:text-white placeholder:text-slate-400 dark:placeholder:text-slate-600" placeholder="••••••••" type="password"/>
                         </div>
                     </div>
                     <div class="flex flex-col gap-2">
-                        <label class="text-sm font-semibold text-slate-700 dark:text-slate-300 ml-1">Confirm Password</label>
+                        <label class="text-sm font-semibold text-slate-700 dark:text-slate-300 ml-1">Confirmer le mot de passe</label>
                         <div class="relative">
                             <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-slate-500 dark:text-slate-400 text-xl">lock_reset</span>
                             <input name="password_confirmation" class="w-full pl-12 pr-4 py-3.5 rounded-xl border border-slate-200 dark:border-primary/20 bg-white dark:bg-primary/5 focus:ring-2 focus:ring-primary/50 focus:border-primary outline-none transition-all dark:text-white placeholder:text-slate-400 dark:placeholder:text-slate-600" placeholder="••••••••" type="password"/>
@@ -129,14 +129,14 @@
                 </div>
 
                 <button class="w-full bg-primary hover:bg-primary/90 text-white font-bold py-4 rounded-xl shadow-lg shadow-primary/20 flex items-center justify-center gap-2 transition-transform active:scale-[0.98]" type="submit">
-                    <span>Create Account</span>
+                    <span>Créer mon compte</span>
                     <span class="material-symbols-outlined">arrow_forward</span>
                 </button>
             </form>
 
             <p class="mt-10 text-center text-slate-600 dark:text-slate-400">
-                Already have an account?
-                <a class="text-primary font-bold hover:underline" href="{{ route('login') }}">Log In</a>
+                Vous avez déjà un compte ?
+                <a class="text-primary font-bold hover:underline" href="{{ route('login') }}">Se connecter</a>
             </p>
         </div>
     </div>
