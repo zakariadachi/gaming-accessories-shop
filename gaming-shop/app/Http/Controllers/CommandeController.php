@@ -43,7 +43,12 @@ class CommandeController extends Controller
 
         session()->forget('cart');
 
-        return redirect()->route('commandes.index')->with('success', 'Commande passée avec succès !');
+        // Ajouter les points de fidélité (1€ = 1 point)
+        $total = $commande->load('ligneCommandes.produit')->total();
+        $pointsGagnes = (int) floor($total);
+        auth()->user()->increment('points', $pointsGagnes);
+
+        return redirect()->route('commandes.index')->with('success', 'Commande passée avec succès ! Vous avez gagné ' . $pointsGagnes . ' points de fidélité');
     }
 
     public function index()
