@@ -48,6 +48,10 @@
                         </td>
                         <td class="px-6 py-4">
                             <div class="flex items-center justify-end gap-2">
+                                <a href="{{ route('admin.produits.show', $produit) }}" class="flex items-center gap-1 px-3 py-1.5 rounded-lg bg-white/5 text-on-surface-variant hover:bg-white/10 text-xs font-bold transition-all">
+                                    <span class="material-symbols-outlined text-sm">visibility</span>
+                                    Voir
+                                </a>
                                 <a href="{{ route('admin.produits.edit', $produit) }}" class="flex items-center gap-1 px-3 py-1.5 rounded-lg bg-primary/10 text-primary hover:bg-primary/20 text-xs font-bold transition-all">
                                     <span class="material-symbols-outlined text-sm">edit</span>
                                     Modifier
