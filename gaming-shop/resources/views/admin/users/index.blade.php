@@ -38,6 +38,7 @@
                         <th class="text-left px-6 py-3 text-xs font-bold uppercase tracking-wider text-[#6b6b9a]">Email</th>
                         <th class="text-left px-6 py-3 text-xs font-bold uppercase tracking-wider text-[#6b6b9a]">Rôle</th>
                         <th class="text-left px-6 py-3 text-xs font-bold uppercase tracking-wider text-[#6b6b9a]">Commandes</th>
+                        <th class="text-left px-6 py-3 text-xs font-bold uppercase tracking-wider text-[#6b6b9a]">Points</th>
                         <th class="text-left px-6 py-3 text-xs font-bold uppercase tracking-wider text-[#6b6b9a]">Inscrit le</th>
                         <th class="text-left px-6 py-3 text-xs font-bold uppercase tracking-wider text-[#6b6b9a]">Action</th>
                     </tr>
@@ -73,6 +74,16 @@
                             <td class="px-6 py-4">
                                 <span class="font-black" style="color: #00d4ff;">{{ $user->commandes_count }}</span>
                             </td>
+                            <td class="px-6 py-4">
+                                @if($user->role === 'client')
+                                    <span class="flex items-center gap-1 font-black text-sm" style="color: #ffaa00;">
+                                        <span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">stars</span>
+                                        {{ number_format($user->points) }}
+                                    </span>
+                                @else
+                                    <span class="text-xs text-[#6b6b9a]">—</span>
+                                @endif
+                            </td>
                             <td class="px-6 py-4 text-[#6b6b9a] text-xs">
                                 {{ $user->created_at->format('d/m/Y') }}
                             </td>
@@ -95,7 +106,7 @@
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="6" class="px-6 py-16 text-center text-[#6b6b9a]">
+                            <td colspan="7" class="px-6 py-16 text-center text-[#6b6b9a]">
                                 <span class="material-symbols-outlined text-4xl block mb-2">group_off</span>
                                 Aucun utilisateur trouvé.
                             </td>
