@@ -22,25 +22,55 @@ class PaymentController extends Controller
 
         Stripe::setApiKey(env('STRIPE_SECRET'));
 
-        $lineItems = [];
+        $user = Auth::user();
 
-        foreach ($cart as $item) {
-            $lineItems[] = [
-                'price_data' => [
-                    'currency'     => 'eur',
-                    'product_data' => ['name' => $item['nom']],
-                    'unit_amount'  => (int) ($item['prix'] * 100),
-                ],
-                'quantity' => $item['quantity'],
-            ];
+        // Calculer le total du panier en euros
+        $totalPanier = array_sum(array_map(fn($item) => $item['prix'] * $item['quantity'], $cart));
+
+        // Calcul réduction points (100 points = 5€)
+        $utiliserPoints = $request->boolean('utiliser_points');
+        $reduction = 0;
+        $pointsUtilises = 0;
+
+        if ($utiliserPoints && $user->points >= 100) {
+            // Calculer la réduction maximale possible avec les points
+            $reductionMaxPossible = floor($user->points / 100) * 5;
+
+            // Limiter la réduction au total du panier (ne peut pas être négatif)
+            $reduction = min($reductionMaxPossible, $totalPanier - 0.50); // garder minimum 0.50€
+            $reduction = max(0, $reduction); // sécurité : jamais négatif
+
+            // Calculer les points réellement utilisés (inverse de la formule)
+            $pointsUtilises = (int) floor($reduction / 5) * 100;
+
+            // Stocker en session pour déduire après paiement
+            session(['points_utilises' => $pointsUtilises]);
         }
 
+        // Calculer le total final en centimes pour Stripe
+        $totalFinal = $totalPanier - $reduction;
+        $totalFinalCents = max(50, (int)($totalFinal * 100)); // minimum 0.50€
+
+        // Créer l'item Stripe avec le total final
+        $nomProduit = 'Commande GearHub';
+        if ($reduction > 0) {
+            $nomProduit .= ' (réduction -' . number_format($reduction, 2) . '€ avec ' . $pointsUtilises . ' points)';
+        }
+
+        $lineItems = [[
+            'price_data' => [
+                'currency'     => 'eur',
+                'product_data' => ['name' => $nomProduit],
+                'unit_amount'  => $totalFinalCents,
+            ],
+            'quantity' => 1,
+        ]];
+
         $session = Session::create([
-            'payment_method_types' => ['card'],
-            'line_items'           => $lineItems,
-            'mode'                 => 'payment',
-            'success_url'          => route('payment.success') . '?session_id={CHECKOUT_SESSION_ID}',
-            'cancel_url'           => route('cart.index'),
+            'line_items'  => $lineItems,
+            'mode'        => 'payment',
+            'success_url' => route('payment.success') . '?session_id={CHECKOUT_SESSION_ID}',
+            'cancel_url'  => route('cart.index'),
         ]);
 
         return redirect($session->url);
@@ -83,7 +113,14 @@ class PaymentController extends Controller
 
         session()->forget('cart');
 
-        // Ajouter les points de fidélité (1€ = 1 point)
+        // Déduire les points utilisés
+        $pointsUtilises = session('points_utilises', 0);
+        if ($pointsUtilises > 0) {
+            Auth::user()->decrement('points', $pointsUtilises);
+            session()->forget('points_utilises');
+        }
+
+        // Ajouter les points gagnés (1€ = 1 point)
         $total = $commande->load('ligneCommandes.produit')->total();
         $pointsGagnes = (int) floor($total);
         Auth::user()->increment('points', $pointsGagnes);
