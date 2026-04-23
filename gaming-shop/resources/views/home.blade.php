@@ -7,42 +7,72 @@
     <div class="mx-auto w-full max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
 
         {{-- ===== HERO ===== --}}
-        <section class="relative mb-16 overflow-hidden rounded-2xl p-6 md:p-16"
-            style="background: linear-gradient(135deg, #0a0a1a, #0f0f23, #1a1a35); border: 1px solid #00d4ff15;">
-            <div class="absolute inset-0 opacity-10" style="background-image: radial-gradient(circle at 2px 2px, #00d4ff 1px, transparent 0); background-size: 28px 28px;"></div>
-            <div class="relative z-10 flex flex-col-reverse items-center gap-12 lg:flex-row">
+        <section class="relative mb-16 overflow-hidden rounded-2xl" style="min-height: 500px;">
+
+            {{-- Background --}}
+            <div class="absolute inset-0" style="background: linear-gradient(135deg, #050510 0%, #0a0a1a 40%, #0f0f23 100%);"></div>
+            <div class="absolute inset-0 opacity-5" style="background-image: radial-gradient(circle at 2px 2px, #00d4ff 1px, transparent 0); background-size: 32px 32px;"></div>
+            <div class="absolute top-0 right-0 w-96 h-96 rounded-full opacity-10" style="background: radial-gradient(circle, #8a2ce2, transparent 70%); transform: translate(30%, -30%);"></div>
+            <div class="absolute bottom-0 left-0 w-64 h-64 rounded-full opacity-10" style="background: radial-gradient(circle, #00d4ff, transparent 70%); transform: translate(-30%, 30%);"></div>
+            <div class="absolute inset-0" style="border: 1px solid #00d4ff15; border-radius: inherit;"></div>
+
+            <div class="relative z-10 flex flex-col-reverse items-center gap-8 p-8 md:p-16 lg:flex-row">
+
+                {{-- Left content --}}
                 <div class="flex flex-1 flex-col items-center text-center lg:items-start lg:text-left">
-                    <span class="mb-4 inline-block rounded-full px-4 py-1 text-xs font-bold uppercase tracking-widest"
-                        style="background: #00d4ff15; border: 1px solid #00d4ff30; color: #00d4ff;">Nouvelle Arrivée</span>
-                    <h1 class="mb-6 text-4xl font-black leading-tight tracking-tight text-white sm:text-6xl">
-                        PLONGEZ DANS <br/>
-                        <span style="background: linear-gradient(135deg, #00d4ff, #8a2ce2); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">LE SON</span>
+
+                    {{-- Badge --}}
+                    <div class="flex items-center gap-2 mb-6">
+                        <span class="w-2 h-2 rounded-full animate-pulse" style="background: #00d4ff;"></span>
+                        <span class="text-xs font-bold uppercase tracking-[0.2em]" style="color: #00d4ff;">Nouvelle Arrivée</span>
+                    </div>
+
+                    {{-- Title --}}
+                    <h1 class="mb-4 font-black leading-none tracking-tight text-white" style="font-size: clamp(2.5rem, 6vw, 4.5rem);">
+                        PLONGEZ DANS
+                        <span class="block" style="background: linear-gradient(135deg, #00d4ff, #8a2ce2); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;">LE SON</span>
                     </h1>
-                    <p class="mb-8 max-w-md text-lg text-[#6b6b9a]">
-                        Découvrez l'audio de qualité professionnelle avec le nouveau casque gaming ZX-700. Latence ultra-faible, 40h de batterie et RGB néon personnalisable.
+
+                    {{-- Description --}}
+                    <p class="mb-8 max-w-md text-base leading-relaxed" style="color: #6b6b9a;">
+                        Découvrez l'audio de qualité professionnelle avec le nouveau casque gaming ZX-700.
+                        Latence ultra-faible, 40h de batterie et RGB néon personnalisable.
                     </p>
-                    <div class="flex flex-wrap justify-center gap-4 lg:justify-start">
+
+                    {{-- CTAs --}}
+                    <div class="flex flex-wrap justify-center lg:justify-start gap-4">
                         <a href="{{ route('produits.index') }}"
-                            class="rounded-xl px-8 py-4 text-base font-extrabold text-white hover:scale-105 transition-transform"
+                            class="flex items-center gap-2 rounded-xl px-8 py-4 text-sm font-extrabold text-white hover:scale-105 transition-transform"
                             style="background: linear-gradient(135deg, #00d4ff, #8a2ce2); box-shadow: 0 0 30px #00d4ff30;">
-                            ACHETER
+                            ACHETER MAINTENANT
                         </a>
                         <a href="{{ route('communaute.index') }}"
-                            class="rounded-xl border px-8 py-4 text-base font-extrabold transition-colors hover:bg-[#00d4ff]/10"
-                            style="border-color: #00d4ff50; color: #00d4ff;">
+                            class="flex items-center gap-2 rounded-xl border px-8 py-4 text-sm font-extrabold transition-all hover:bg-[#00d4ff]/10"
+                            style="border-color: #00d4ff40; color: #00d4ff;">
                             COMMUNAUTÉ
                         </a>
                     </div>
                 </div>
+
+                {{-- Right image --}}
                 <div class="flex-1 flex justify-center">
-                    <div class="aspect-square w-full max-w-[420px] rounded-2xl p-4"
-                        style="background: linear-gradient(135deg, #00d4ff15, #8a2ce215);">
-                        <img alt="Professional RGB Gaming Headset"
-                            class="h-full w-full object-contain"
-                            style="filter: drop-shadow(0 20px 50px rgba(0,212,255,0.3));"
-                            src="https://lh3.googleusercontent.com/aida-public/AB6AXuDcFhCKtOmSZhunDBUCOdwXf0K2X8NZ5EgoRrYM_NYKI1KOxQx1-h4ivQ6CLt9-5c2CVKTKH4iIy-BEFCSHJ0khpzXpBrGDvs999xpPpRK9e3JUOmdBU1mjd5FXryHZ9oIXlFcyOU1S4MRlQdSAZTjWphwT2JZmi-hLNLXs_9hwRWrF-5oHrClGaCUt3uBJtu1rqpeYcSd73nBhY_j4JogJP6NkqJljR8GwLGvozzXOR6LM2Eit1G7Pg9mLZ-cTS5KXNX48QgsdaQ"/>
+                    <div class="relative w-full max-w-[420px]">
+                        {{-- Glow effect --}}
+                        <div class="absolute inset-0 rounded-full opacity-30" style="background: radial-gradient(circle, #00d4ff40, transparent 70%); filter: blur(40px);"></div>
+                        <div class="relative rounded-2xl p-6" style="background: linear-gradient(135deg, #00d4ff08, #8a2ce208); border: 1px solid #00d4ff15;">
+                            <img alt="Professional RGB Gaming Headset"
+                                class="w-full h-full object-contain"
+                                style="filter: drop-shadow(0 20px 60px rgba(0,212,255,0.4)); transform: perspective(800px) rotateY(-5deg);"
+                                src="https://lh3.googleusercontent.com/aida-public/AB6AXuDcFhCKtOmSZhunDBUCOdwXf0K2X8NZ5EgoRrYM_NYKI1KOxQx1-h4ivQ6CLt9-5c2CVKTKH4iIy-BEFCSHJ0khpzXpBrGDvs999xpPpRK9e3JUOmdBU1mjd5FXryHZ9oIXlFcyOU1S4MRlQdSAZTjWphwT2JZmi-hLNLXs_9hwRWrF-5oHrClGaCUt3uBJtu1rqpeYcSd73nBhY_j4JogJP6NkqJljR8GwLGvozzXOR6LM2Eit1G7Pg9mLZ-cTS5KXNX48QgsdaQ"/>
+                        </div>
+                        {{-- Price badge --}}
+                        <div class="absolute -bottom-4 -right-4 rounded-2xl px-4 py-3 text-center" style="background: #0f0f23; border: 1px solid #00d4ff30; box-shadow: 0 0 20px #00d4ff15;">
+                            <p class="text-[10px] font-bold uppercase tracking-widest" style="color: #6b6b9a;">À partir de</p>
+                            <p class="text-xl font-black" style="background: linear-gradient(135deg, #00d4ff, #8a2ce2); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;">99.99 €</p>
+                        </div>
                     </div>
                 </div>
+
             </div>
         </section>
 

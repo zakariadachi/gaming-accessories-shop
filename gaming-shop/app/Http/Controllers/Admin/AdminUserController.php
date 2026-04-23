@@ -49,10 +49,6 @@ class AdminUserController extends Controller
             return back()->with('error', 'Vous ne pouvez pas vous bannir vous-même.');
         }
 
-        if ($user->role === 'admin') {
-            return back()->with('error', 'Impossible de bannir un administrateur.');
-        }
-
         $user->update(['is_banned' => !$user->is_banned]);
 
         $message = $user->is_banned

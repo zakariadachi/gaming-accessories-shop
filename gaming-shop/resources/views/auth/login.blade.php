@@ -74,6 +74,13 @@
                 </div>
             @endif
 
+            {{-- Error message (ban, etc.) --}}
+            @if (session('error'))
+                <div class="bg-red-500/10 border border-red-500/30 rounded-lg p-4">
+                    <p class="text-red-400 text-sm">{{ session('error') }}</p>
+                </div>
+            @endif
+
             {{-- Erreurs de validation --}}
             @if ($errors->any())
                 <div class="bg-red-500/10 border border-red-500/30 rounded-lg p-4">

@@ -43,7 +43,7 @@
                         <th class="text-left px-6 py-3 text-xs font-bold uppercase tracking-wider text-[#6b6b9a]">Action</th>
                     </tr>
                 </thead>
-                <tbody class="divide-y" style="divide-color: #262626;">
+                <tbody class="divide-y divide-[#262626]">
                     @forelse ($users as $user)
                         <tr class="hover:bg-white/5 transition-colors">
                             <td class="px-6 py-4">
@@ -89,8 +89,9 @@
                             </td>
                             <td class="px-6 py-4">
                                 @if ($user->id !== Auth::id() && $user->role !== 'admin')
+                                    @php $confirmMsg = $user->is_banned ? 'Debannir ' . $user->nom . ' ?' : 'Bannir ' . $user->nom . ' ?'; @endphp
                                     <form action="{{ route('admin.users.ban', $user) }}" method="POST"
-                                        onsubmit="return confirm('{{ $user->is_banned ? 'Débannir ' . $user->nom . ' ?' : 'Bannir ' . $user->nom . ' ? Il ne pourra plus se connecter.' }}')">
+                                        onsubmit="return confirm('{{ $confirmMsg }}')">
                                         @csrf
                                         @method('PATCH')
                                         <button type="submit" class="flex items-center gap-1 px-3 py-1.5 rounded-xl text-xs font-bold transition-all"

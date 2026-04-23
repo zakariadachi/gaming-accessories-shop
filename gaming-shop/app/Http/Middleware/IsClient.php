@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response;
 
 class IsClient
@@ -12,6 +13,14 @@ class IsClient
     {
         if ($request->user() && $request->user()->isAdmin()) {
             return redirect()->route('admin.dashboard');
+        }
+
+        if ($request->user() && $request->user()->is_banned) {
+            Auth::logout();
+            $request->session()->invalidate();
+            $request->session()->regenerateToken();
+            $request->session()->flash('error', 'Votre compte a été banni. Contactez l\'administrateur.');
+            return redirect()->route('login');
         }
 
         return $next($request);

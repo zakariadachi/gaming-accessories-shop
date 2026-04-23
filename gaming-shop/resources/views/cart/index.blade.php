@@ -166,13 +166,38 @@
                             <span class="text-[#00e676] font-semibold">Gratuite</span>
                         </div>
 
+                        @auth
+                            @if(Auth::user()->points >= 100)
+                                @php $reduction = floor(Auth::user()->points / 100) * 5; @endphp
+                                <div id="reduction-row" class="hidden flex justify-between items-center mb-4">
+                                    <span class="text-sm" style="color: #ffaa00;">Réduction points</span>
+                                    <span class="text-sm font-black" style="color: #ffaa00;">-{{ number_format($reduction, 2) }} €</span>
+                                </div>
+                            @endif
+                        @endauth
+
                         <div class="flex justify-between items-center mb-8">
                             <span class="text-lg font-black">Total</span>
-                            <span class="text-2xl font-black neon-text">{{ number_format($total, 2) }} €</span>
+                            <span class="text-2xl font-black neon-text" id="total-display">{{ number_format($total, 2) }} €</span>
                         </div>
 
                         <form action="{{ route('payment.checkout') }}" method="POST">
                             @csrf
+                            @auth
+                                @if(Auth::user()->points >= 100)
+                                    @php $reduction = floor(Auth::user()->points / 100) * 5; @endphp
+                                    <div class="flex items-center justify-between p-3 rounded-xl mb-4" style="background: #ffaa0010; border: 1px solid #ffaa0030;">
+                                        <div class="flex items-center gap-2">
+                                            <input type="checkbox" name="utiliser_points" id="utiliser_points" class="rounded" style="accent-color: #ffaa00;">
+                                            <label for="utiliser_points" class="text-sm font-semibold cursor-pointer" style="color: #ffaa00;">
+                                                <span class="material-symbols-outlined text-sm align-middle" style="font-variation-settings: 'FILL' 1;">stars</span>
+                                                Utiliser mes points ({{ Auth::user()->points }} pts)
+                                            </label>
+                                        </div>
+                                        <span class="text-xs font-black" style="color: #ffaa00;">-{{ number_format($reduction, 2) }} €</span>
+                                    </div>
+                                @endif
+                            @endauth
                             <button type="submit" class="w-full btn-primary flex items-center justify-center gap-2 rounded-xl py-4 font-bold text-white transition-all active:scale-95 hover:scale-105">
                                 <span class="material-symbols-outlined">credit_card</span>
                                 Payer maintenant
@@ -201,5 +226,27 @@
         </div>
     </footer>
 
+    <script>
+        const checkbox = document.getElementById('utiliser_points');
+        if (checkbox) {
+            const total = {{ $total }};
+            const reduction = {{ isset($reduction) ? $reduction : 0 }};
+            const totalDisplay = document.getElementById('total-display');
+            const reductionRow = document.getElementById('reduction-row');
+
+            checkbox.addEventListener('change', function() {
+                if (this.checked) {
+                    const newTotal = Math.max(0, total - reduction);
+                    totalDisplay.textContent = newTotal.toFixed(2) + ' €';
+                    reductionRow.classList.remove('hidden');
+                    reductionRow.classList.add('flex');
+                } else {
+                    totalDisplay.textContent = total.toFixed(2) + ' €';
+                    reductionRow.classList.add('hidden');
+                    reductionRow.classList.remove('flex');
+                }
+            });
+        }
+    </script>
 </body>
 </html>

@@ -9,8 +9,14 @@ class HomeController extends Controller
 {
     public function index()
     {
-        $produits   = Produit::with('categorie')->latest()->take(4)->get();
         $categories = Categorie::all();
+
+        $produits = $categories->take(4)->map(function ($categorie) {
+            return Produit::with('categorie')
+                ->where('categorie_id', $categorie->id)
+                ->latest()
+                ->first();
+        })->filter();
 
         return view('home', compact('produits', 'categories'));
     }
