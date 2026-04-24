@@ -39,4 +39,9 @@ class Commande extends Model
     {
         return $this->hasMany(LigneCommande::class, 'commande_id');
     }
+
+    public function transaction()
+    {
+        return $this->hasOne(Transaction::class);
+    }
 }
