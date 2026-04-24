@@ -127,18 +127,12 @@ class PaymentController extends Controller
         Auth::user()->increment('points', $pointsGagnes);
 
         // Sauvegarder la transaction
-        $reduction = $pointsUtilises > 0 ? floor($pointsUtilises / 100) * 5 : 0;
         Transaction::create([
-            'commande_id'      => $commande->id,
             'user_id'          => Auth::id(),
+            'commande_id'      => $commande->id,
+            'amount'           => $total - $reduction,
+            'status'           => 'paid',
             'stripe_session_id'=> $request->session_id,
-            'montant'          => $total,
-            'reduction'        => $reduction,
-            'montant_final'    => $total - $reduction,
-            'devise'           => 'EUR',
-            'statut'           => 'payee',
-            'points_utilises'  => $pointsUtilises,
-            'points_gagnes'    => $pointsGagnes,
         ]);
 
         return redirect()->route('payment.confirmation', $commande)->with('success', 'Paiement réussi ! Vous avez gagné ' . $pointsGagnes . ' points de fidélité 🎉');

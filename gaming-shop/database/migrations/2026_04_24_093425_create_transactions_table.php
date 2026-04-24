@@ -10,16 +10,11 @@ return new class extends Migration
     {
         Schema::create('transactions', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('commande_id')->constrained('commandes')->onDelete('cascade');
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
+            $table->foreignId('commande_id')->constrained('commandes')->onDelete('cascade');
+            $table->decimal('amount', 10, 2);
+            $table->enum('status', ['pending', 'paid', 'failed', 'refunded'])->default('pending');
             $table->string('stripe_session_id')->unique();
-            $table->decimal('montant', 10, 2);
-            $table->decimal('reduction', 10, 2)->default(0);
-            $table->decimal('montant_final', 10, 2);
-            $table->string('devise', 3)->default('EUR');
-            $table->enum('statut', ['en_attente', 'payee', 'echouee', 'remboursee'])->default('en_attente');
-            $table->integer('points_utilises')->default(0);
-            $table->integer('points_gagnes')->default(0);
             $table->timestamps();
         });
     }
