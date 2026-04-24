@@ -97,6 +97,11 @@
                 <span>Commandes</span>
             </a>
 
+            <a href="{{ route('admin.transactions.index') }}" class="sidebar-link {{ request()->routeIs('admin.transactions.*') ? 'active' : '' }}">
+                <span class="material-symbols-outlined text-lg">payments</span>
+                <span>Transactions</span>
+            </a>
+
             <!-- Utilisateurs -->
             <p class="text-[9px] font-black uppercase tracking-[0.2em] px-3 mt-5 mb-3" style="color: rgba(255,255,255,0.25);">Utilisateurs</p>
 

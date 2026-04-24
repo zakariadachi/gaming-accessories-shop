@@ -11,6 +11,7 @@ use App\Http\Controllers\Admin\AdminDashboardController;
 use App\Http\Controllers\Admin\AdminProduitController;
 use App\Http\Controllers\Admin\AdminCategorieController;
 use App\Http\Controllers\Admin\AdminCommandeController;
+use App\Http\Controllers\Admin\AdminTransactionController;
 use App\Http\Controllers\Admin\AdminUserController;
 use Illuminate\Support\Facades\Route;
 
@@ -80,4 +81,6 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'isAdmin'])->group(f
     Route::patch('/users/{user}/role', [AdminUserController::class, 'updateRole'])->name('users.role');
     Route::patch('/users/{user}/ban', [AdminUserController::class, 'toggleBan'])->name('users.ban');
     Route::delete('/users/{user}', [AdminUserController::class, 'destroy'])->name('users.destroy');
+
+    Route::get('/transactions', [AdminTransactionController::class, 'index'])->name('transactions.index');
 });
