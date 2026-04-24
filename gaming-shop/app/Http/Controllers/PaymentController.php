@@ -28,23 +28,28 @@ class PaymentController extends Controller
         // Calculer le total du panier en euros
         $totalPanier = array_sum(array_map(fn($item) => $item['prix'] * $item['quantity'], $cart));
 
-        // Calcul réduction points (100 points = 5€)
+        // Calcul réduction points (1 point = 0.10€, max 20% du total)
         $utiliserPoints = $request->boolean('utiliser_points');
         $reduction = 0;
         $pointsUtilises = 0;
 
-        if ($utiliserPoints && $user->points >= 100) {
-            // Calculer la réduction maximale possible avec les points
-            $reductionMaxPossible = floor($user->points / 100) * 5;
+        if ($utiliserPoints && $user->points > 0) {
+            // 1 point = 0.10€
+            $reductionMaxPoints = $user->points * 0.10;
 
-            // Limiter la réduction au total du panier (ne peut pas être négatif)
-            $reduction = min($reductionMaxPossible, $totalPanier - 0.50); // garder minimum 0.50€
-            $reduction = max(0, $reduction); // sécurité : jamais négatif
+            // Max 20% du total panier
+            $reductionMax20 = $totalPanier * 0.20;
 
-            // Calculer les points réellement utilisés (inverse de la formule)
-            $pointsUtilises = (int) floor($reduction / 5) * 100;
+            // Prendre le minimum des deux
+            $reduction = min($reductionMaxPoints, $reductionMax20);
 
-            // Stocker en session pour déduire après paiement
+            // Garder minimum 0.50€ pour Stripe
+            $reduction = min($reduction, $totalPanier - 0.50);
+            $reduction = max(0, round($reduction, 2));
+
+            // Points utilisés = réduction / 0.10
+            $pointsUtilises = (int) ceil($reduction / 0.10);
+
             session(['points_utilises' => $pointsUtilises]);
         }
 
@@ -116,6 +121,7 @@ class PaymentController extends Controller
 
         // Déduire les points utilisés
         $pointsUtilises = session('points_utilises', 0);
+        $reduction = $pointsUtilises * 0.10;
         if ($pointsUtilises > 0) {
             Auth::user()->decrement('points', $pointsUtilises);
             session()->forget('points_utilises');

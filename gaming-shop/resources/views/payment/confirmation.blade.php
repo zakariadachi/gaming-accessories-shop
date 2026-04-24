@@ -19,9 +19,17 @@
         Paiement <span style="background: linear-gradient(135deg, #00e676, #00d4ff); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">réussi !</span>
     </h1>
     <p class="text-[#6b6b9a] text-lg mb-2">Merci pour votre commande.</p>
-    <p class="text-[#6b6b9a] mb-10">
+    <p class="text-[#6b6b9a] mb-6">
         Votre commande <span class="text-white font-bold">#{{ $commande->id }}</span> a été confirmée.
     </p>
+
+    {{-- Points gagnés --}}
+    @if(session('success'))
+        <div class="inline-flex items-center gap-3 px-6 py-3 rounded-2xl mb-8" style="background: #ffaa0015; border: 1px solid #ffaa0030;">
+            <span class="material-symbols-outlined text-2xl" style="color: #ffaa00; font-variation-settings: 'FILL' 1;">stars</span>
+            <p class="font-bold" style="color: #ffaa00;">{{ session('success') }}</p>
+        </div>
+    @endif
 
     {{-- Récapitulatif --}}
     <div class="rounded-2xl overflow-hidden mb-8 text-left" style="background: #0f0f23; border: 1px solid #1e1e3f;">

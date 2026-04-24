@@ -39,7 +39,6 @@
                         <th class="text-left px-6 py-3 text-xs font-bold uppercase tracking-wider text-[#6b6b9a]">Commande</th>
                         <th class="text-left px-6 py-3 text-xs font-bold uppercase tracking-wider text-[#6b6b9a]">Montant</th>
                         <th class="text-left px-6 py-3 text-xs font-bold uppercase tracking-wider text-[#6b6b9a]">Statut</th>
-                        <th class="text-left px-6 py-3 text-xs font-bold uppercase tracking-wider text-[#6b6b9a]">Session Stripe</th>
                         <th class="text-left px-6 py-3 text-xs font-bold uppercase tracking-wider text-[#6b6b9a]">Date</th>
                     </tr>
                 </thead>
@@ -80,16 +79,13 @@
                                     {{ $s['label'] }}
                                 </span>
                             </td>
-                            <td class="px-6 py-4 text-[#6b6b9a] text-xs font-mono">
-                                {{ substr($transaction->stripe_session_id, 0, 20) }}...
-                            </td>
                             <td class="px-6 py-4 text-[#6b6b9a] text-xs">
                                 {{ $transaction->created_at->format('d/m/Y H:i') }}
                             </td>
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="7" class="px-6 py-16 text-center text-[#6b6b9a]">
+                            <td colspan="6" class="px-6 py-16 text-center text-[#6b6b9a]">
                                 <span class="material-symbols-outlined text-4xl block mb-2">receipt_long</span>
                                 Aucune transaction trouvée.
                             </td>

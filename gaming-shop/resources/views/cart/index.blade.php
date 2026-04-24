@@ -167,11 +167,17 @@
                         </div>
 
                         @auth
-                            @if(Auth::user()->points >= 100)
-                                @php $reduction = floor(Auth::user()->points / 100) * 5; @endphp
+                            @if(Auth::user()->points > 0)
+                                @php
+                                    $reductionMax = min(
+                                        Auth::user()->points * 0.10,
+                                        $total * 0.20
+                                    );
+                                    $reductionMax = round(min($reductionMax, $total - 0.50), 2);
+                                @endphp
                                 <div id="reduction-row" class="hidden flex justify-between items-center mb-4">
                                     <span class="text-sm" style="color: #ffaa00;">Réduction points</span>
-                                    <span class="text-sm font-black" style="color: #ffaa00;">-{{ number_format($reduction, 2) }} €</span>
+                                    <span class="text-sm font-black" style="color: #ffaa00;">-{{ number_format($reductionMax, 2) }} €</span>
                                 </div>
                             @endif
                         @endauth
@@ -184,17 +190,37 @@
                         <form action="{{ route('payment.checkout') }}" method="POST">
                             @csrf
                             @auth
-                                @if(Auth::user()->points >= 100)
-                                    @php $reduction = floor(Auth::user()->points / 100) * 5; @endphp
-                                    <div class="flex items-center justify-between p-3 rounded-xl mb-4" style="background: #ffaa0010; border: 1px solid #ffaa0030;">
-                                        <div class="flex items-center gap-2">
-                                            <input type="checkbox" name="utiliser_points" id="utiliser_points" class="rounded" style="accent-color: #ffaa00;">
-                                            <label for="utiliser_points" class="text-sm font-semibold cursor-pointer" style="color: #ffaa00;">
-                                                <span class="material-symbols-outlined text-sm align-middle" style="font-variation-settings: 'FILL' 1;">stars</span>
-                                                Utiliser mes points ({{ Auth::user()->points }} pts)
+                                @if(Auth::user()->points > 0)
+                                    @php
+                                        $reductionMax = min(
+                                            Auth::user()->points * 0.10,
+                                            $total * 0.20
+                                        );
+                                        $reductionMax = round(min($reductionMax, $total - 0.50), 2);
+                                        $pointsNecessaires = (int) ceil($reductionMax / 0.10);
+                                    @endphp
+
+                                    {{-- Points Card --}}
+                                    <div class="rounded-2xl mb-4 overflow-hidden" style="border: 1px solid #ffaa0030;">
+                                        {{-- Header --}}
+                                        <div class="flex items-center justify-between px-4 py-3" style="background: #ffaa0010;">
+                                            <div class="flex items-center gap-2">
+                                                <span class="material-symbols-outlined text-lg" style="color: #ffaa00; font-variation-settings: 'FILL' 1;">stars</span>
+                                                <span class="text-sm font-black" style="color: #ffaa00;">Points fidélité</span>
+                                            </div>
+                                            <span class="text-xs font-bold px-2 py-0.5 rounded-full" style="background: #ffaa0020; color: #ffaa00;">{{ Auth::user()->points }} pts</span>
+                                        </div>
+                                        {{-- Toggle --}}
+                                        <div class="px-4 py-3 flex items-center justify-between" style="background: #0a0a1a;">
+                                            <div>
+                                                <p class="text-xs text-[#c8c8e8] font-semibold">Utiliser mes points</p>
+                                                <p class="text-[10px] text-[#6b6b9a] mt-0.5">Réduction de <span style="color: #ffaa00;">-{{ number_format($reductionMax, 2) }} €</span> ({{ $pointsNecessaires }} pts)</p>
+                                            </div>
+                                            <label class="relative inline-flex items-center cursor-pointer">
+                                                <input type="checkbox" name="utiliser_points" id="utiliser_points" class="sr-only peer">
+                                                <div class="w-11 h-6 rounded-full peer-checked:after:translate-x-full after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all" style="background: #1e1e3f;" id="toggle-bg"></div>
                                             </label>
                                         </div>
-                                        <span class="text-xs font-black" style="color: #ffaa00;">-{{ number_format($reduction, 2) }} €</span>
                                     </div>
                                 @endif
                             @endauth
@@ -230,9 +256,10 @@
         const checkbox = document.getElementById('utiliser_points');
         if (checkbox) {
             const total = {{ $total }};
-            const reduction = {{ isset($reduction) ? $reduction : 0 }};
+            const reduction = {{ isset($reductionMax) ? $reductionMax : 0 }};
             const totalDisplay = document.getElementById('total-display');
             const reductionRow = document.getElementById('reduction-row');
+            const toggleBg = document.getElementById('toggle-bg');
 
             checkbox.addEventListener('change', function() {
                 if (this.checked) {
@@ -240,10 +267,12 @@
                     totalDisplay.textContent = newTotal.toFixed(2) + ' €';
                     reductionRow.classList.remove('hidden');
                     reductionRow.classList.add('flex');
+                    toggleBg.style.background = '#ffaa00';
                 } else {
                     totalDisplay.textContent = total.toFixed(2) + ' €';
                     reductionRow.classList.add('hidden');
                     reductionRow.classList.remove('flex');
+                    toggleBg.style.background = '#1e1e3f';
                 }
             });
         }
