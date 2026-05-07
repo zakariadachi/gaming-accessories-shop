@@ -66,7 +66,7 @@
                             </td>
                             <td class="px-6 py-4 text-[#c8c8e8]">{{ $commande->date->format('d/m/Y') }}</td>
                             <td class="px-6 py-4 text-[#c8c8e8]">{{ $commande->ligneCommandes->count() }} article(s)</td>
-                            <td class="px-6 py-4 font-black" style="color: #00d4ff;">{{ number_format($commande->total(), 2) }} €</td>
+                            <td class="px-6 py-4 font-black" style="color: #00d4ff;">{{ number_format($commande->total, 2) }} €</td>
                             <td class="px-6 py-4">
                                 <span class="text-xs font-bold px-3 py-1 rounded-full"
                                     style="background: {{ $s['color'] }}15; border: 1px solid {{ $s['color'] }}40; color: {{ $s['color'] }};">

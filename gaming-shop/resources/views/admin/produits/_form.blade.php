@@ -37,36 +37,14 @@
         Image <span class="text-on-surface-variant font-normal">(PNG, JPG, WEBP — max 2MB)</span>
     </label>
 
-    {{-- Preview image actuelle --}}
-    @if(!empty($produit->image ?? null))
+    {{-- Aperçu image actuelle --}}
+    @if (!empty($produit->image))
         <div class="flex items-center gap-3 mb-2">
-            <img src="{{ $produit->image }}" class="w-16 h-16 rounded-xl object-cover border border-outline-variant"/>
-            <span class="text-xs text-on-surface-variant">Image actuelle</span>
+            <img src="{{ Storage::url($produit->image) }}" alt="Image actuelle" class="w-16 h-16 rounded-xl object-cover"/>
+            <span class="text-xs text-on-surface-variant">Image actuelle — laisser vide pour la conserver</span>
         </div>
     @endif
 
-    <label class="flex flex-col items-center justify-center w-full h-32 rounded-xl border-2 border-dashed border-outline-variant bg-surface-container-high cursor-pointer hover:border-primary/50 transition-all" id="upload-label">
-        <span class="material-symbols-outlined text-3xl text-on-surface-variant mb-1">upload_file</span>
-        <span class="text-sm text-on-surface-variant" id="upload-text">Cliquer pour choisir une image</span>
-        <input name="image" type="file" accept=".png,.jpg,.jpeg,.webp" class="hidden" id="image-input"/>
-    </label>
-    @error('image') <p class="text-error text-xs mt-1">{{ $message }}</p> @enderror
+    <input name="image" type="file" accept="image/png,image/jpeg,image/webp"
+        class="w-full px-4 py-3 rounded-xl border border-outline-variant bg-surface-container-high text-white focus:ring-2 focus:ring-primary/50 outline-none transition-all file:mr-4 file:py-1 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-bold file:bg-primary/20 file:text-primary"/>
 </div>
-
-@push('scripts')
-<script>
-    document.getElementById('image-input').addEventListener('change', function() {
-        const file = this.files[0];
-        if (file) {
-            document.getElementById('upload-text').textContent = file.name;
-            const reader = new FileReader();
-            reader.onload = e => {
-                document.getElementById('upload-label').style.backgroundImage = `url(${e.target.result})`;
-                document.getElementById('upload-label').style.backgroundSize = 'cover';
-                document.getElementById('upload-label').style.backgroundPosition = 'center';
-            };
-            reader.readAsDataURL(file);
-        }
-    });
-</script>
-@endpush

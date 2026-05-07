@@ -17,18 +17,16 @@ class ReviewController extends Controller
             'commentaire' => ['required', 'string', 'min:10', 'max:500'],
         ]);
 
-        // Vérifier que l'utilisateur a acheté ce produit
         $aAchete = Auth::user()->commandes()
-            ->whereHas('ligneCommandes', fn($q) => $q->where('produit_id', $produit->id))
+            ->whereHas('ligneCommandes', fn($q) => $q->where('produit_id', (int) $produit->id))
             ->exists();
 
         if (!$aAchete) {
             return back()->with('error', 'Vous devez acheter ce produit avant de laisser un avis.');
         }
 
-        // Vérifier qu'il n'a pas déjà laissé un avis
-        $dejaAvis = Review::where('user_id', Auth::id())
-            ->where('produit_id', $produit->id)
+        $dejaAvis = Review::where('user_id', (int) Auth::id())
+            ->where('produit_id', (int) $produit->id)
             ->exists();
 
         if ($dejaAvis) {

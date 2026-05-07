@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Commande extends Model
 {
@@ -14,20 +15,23 @@ class Commande extends Model
     protected $table = 'commandes';
 
     protected $fillable = [
-        'date',
-        'statut',
         'user_id',
+        'statut',
+        'date',
     ];
 
     protected $casts = [
-        'date' => 'date',
+        'created_at' => 'datetime',
+        'date'       => 'date',
     ];
 
     const STATUTS = ['en_attente', 'confirmée', 'annulée'];
 
-    public function total(): float
+    public function getTotalAttribute(): float
     {
-        return $this->ligneCommandes->sum(fn($l) => $l->produit->prix * $l->quantity);
+        return $this->ligneCommandes->sum(function($ligne) {
+            return $ligne->quantity * $ligne->prix_unitaire;
+        });
     }
 
     public function user(): BelongsTo
@@ -40,7 +44,7 @@ class Commande extends Model
         return $this->hasMany(LigneCommande::class, 'commande_id');
     }
 
-    public function transaction()
+    public function transaction(): HasOne
     {
         return $this->hasOne(Transaction::class);
     }

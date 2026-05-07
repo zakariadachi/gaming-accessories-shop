@@ -62,8 +62,8 @@
                         <p class="text-xs text-[#6b6b9a]">{{ $ligne->produit->categorie->nom }}</p>
                     </div>
                     <div class="text-right flex-shrink-0">
-                        <p class="text-xs text-[#6b6b9a]">{{ $ligne->quantity }} × {{ number_format($ligne->produit->prix, 2) }} €</p>
-                        <p class="font-black" style="color: #00d4ff;">{{ number_format($ligne->produit->prix * $ligne->quantity, 2) }} €</p>
+                        <p class="text-xs text-[#6b6b9a]">{{ $ligne->quantity }} × {{ number_format($ligne->prix_unitaire, 2) }} €</p>
+                        <p class="font-black" style="color: #00d4ff;">{{ number_format($ligne->prix_unitaire * $ligne->quantity, 2) }} €</p>
                     </div>
                 </div>
             @endforeach
@@ -73,7 +73,7 @@
         <div class="px-6 py-4 flex justify-between items-center border-t" style="border-color: #1e1e3f; background: #1a1a35;">
             <span class="font-black text-white">Total</span>
             <span class="text-2xl font-black" style="background: linear-gradient(135deg, #00d4ff, #8a2ce2); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
-                {{ number_format($commande->total(), 2) }} €
+                {{ number_format($commande->total, 2) }} €
             </span>
         </div>
     </div>

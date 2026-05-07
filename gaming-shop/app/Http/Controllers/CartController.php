@@ -47,7 +47,7 @@ class CartController extends Controller
             return back()->with('error', '"' . $produit->nom . '" est en rupture de stock.');
         }
 
-        $quantity = $request->input('quantity', 1);
+        $quantity = (int) $request->input('quantity', 1);
 
         if ($quantity > $produit->stock) {
             return back()->with('error', 'Quantité demandée indisponible. Seulement ' . $produit->stock . ' disponible(s).');
@@ -102,7 +102,7 @@ class CartController extends Controller
             return back()->with('error', 'Stock insuffisant. Seulement ' . $produit->stock . ' disponible(s).');
         }
 
-        $cart[$id]['quantity'] = $request->quantity;
+        $cart[$id]['quantity'] = (int) $request->quantity;
         $cart[$id]['prix']     = $produit->prix;
 
         $this->saveCart($request, $cart);

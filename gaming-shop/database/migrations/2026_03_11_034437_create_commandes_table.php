@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('commandes', function (Blueprint $table) {
             $table->id();
             $table->date('date');
+            $table->enum('statut', ['en_attente', 'confirmée', 'annulée'])->default('en_attente');
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->timestamps();
         });

@@ -10,19 +10,27 @@ use Symfony\Component\HttpFoundation\Response;
 class IsClient
 {
     public function handle(Request $request, Closure $next): Response
-    {
-        if ($request->user() && $request->user()->isAdmin()) {
-            return redirect()->route('admin.dashboard');
-        }
+{
+    $user = $request->user();
 
-        if ($request->user() && $request->user()->is_banned) {
-            Auth::logout();
-            $request->session()->invalidate();
-            $request->session()->regenerateToken();
-            $request->session()->flash('error', 'Votre compte a été banni. Contactez l\'administrateur.');
-            return redirect()->route('login');
-        }
-
+    if (!$user) {
         return $next($request);
     }
+
+    if ($user->isAdmin()) {
+        return redirect()->route('admin.dashboard');
+    }
+
+    if ($user->is_banned) {
+        Auth::logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
+        return redirect()
+            ->route('login')
+            ->with('error', 'Votre compte a été banni. Contactez l\'administrateur.');
+    }
+
+    return $next($request);
+}
 }

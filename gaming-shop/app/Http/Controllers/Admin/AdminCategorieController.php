@@ -26,6 +26,7 @@ class AdminCategorieController extends Controller
         Categorie::create($request->only('nom', 'description'));
 
         return back()->with('success', 'Catégorie "' . $request->nom . '" créée avec succès.');
+        
     }
 
     public function update(Request $request, Categorie $categorie): RedirectResponse
@@ -42,7 +43,7 @@ class AdminCategorieController extends Controller
 
     public function destroy(Categorie $categorie): RedirectResponse
     {
-        if ($categorie->produits()->count() > 0) {
+        if ($categorie->produits()->exists()) {
             return back()->with('error', 'Impossible de supprimer une catégorie qui contient des produits.');
         }
 

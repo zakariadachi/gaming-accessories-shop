@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('ligne_commandes', function (Blueprint $table) {
             $table->id();
             $table->integer('quantity');
+            $table->decimal('prix_unitaire', 10, 2);
             $table->foreignId('commande_id')->constrained('commandes')->onDelete('cascade');
             $table->foreignId('produit_id')->constrained('produits')->onDelete('cascade');
             $table->timestamps();

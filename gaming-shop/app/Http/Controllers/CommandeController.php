@@ -7,6 +7,7 @@ use App\Models\LigneCommande;
 use App\Models\Produit;
 use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\DB;
 
 class CommandeController extends Controller
 {
@@ -18,37 +19,44 @@ class CommandeController extends Controller
             return redirect()->route('produits.index')->with('error', 'Votre panier est vide.');
         }
 
-        $commande = Commande::create([
-            'date'    => now(),
-            'statut'  => 'en_attente',
-            'user_id' => auth()->id(),
-        ]);
+        try {
+            DB::transaction(function () use ($cart) {
 
-        foreach ($cart as $item) {
-            $produit = Produit::find($item['id']);
+                $commande = Commande::create([
+                    'date'    => now(),
+                    'statut'  => 'en_attente',
+                    'user_id' => auth()->id(),
+                ]);
 
-            if (!$produit || $produit->stock < $item['quantity']) {
-                $commande->delete();
-                return back()->with('error', 'Stock insuffisant pour "' . $item['nom'] . '".');
-            }
+                foreach ($cart as $item) {
+                    $produit = Produit::lockForUpdate()->find($item['id']);
 
-            LigneCommande::create([
-                'commande_id' => $commande->id,
-                'produit_id'  => $item['id'],
-                'quantity'    => $item['quantity'],
-            ]);
+                    if (!$produit || $produit->stock < $item['quantity']) {
+                        throw new \Exception('Stock insuffisant pour "' . $item['nom'] . '".');
+                    }
 
-            $produit->decrement('stock', $item['quantity']);
+                    LigneCommande::create([
+                        'commande_id'  => $commande->id,
+                        'produit_id'   => $item['id'],
+                        'quantity'     => $item['quantity'],
+                        'prix_unitaire' => $produit->prix,
+                    ]);
+
+                    $produit->decrement('stock', $item['quantity']);
+                }
+            });
+
+            session()->forget('cart');
+            return redirect()->route('commandes.index')->with('success', 'Commande passée avec succès !');
+
+        } catch (\Exception $e) {
+            return back()->with('error', $e->getMessage());
         }
-
-        session()->forget('cart');
-
-        return redirect()->route('commandes.index')->with('success', 'Commande passée avec succès !');
     }
 
     public function index()
     {
-        $commandes = Commande::with('ligneCommandes.produit')
+        $commandes = Commande::with('ligneCommandes.produit.categorie')
             ->where('user_id', auth()->id())
             ->latest()
             ->get();
@@ -62,7 +70,7 @@ class CommandeController extends Controller
             abort(403);
         }
 
-        $commande->load('ligneCommandes.produit');
+        $commande->load('ligneCommandes.produit.categorie');
 
         return view('commandes.show', compact('commande'));
     }

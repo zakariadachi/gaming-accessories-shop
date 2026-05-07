@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('nom');
             $table->float('prix');
             $table->integer('stock');
+            $table->string('image')->nullable();
             $table->foreignId('categorie_id')->constrained('categories')->onDelete('cascade');
             $table->timestamps();
         });

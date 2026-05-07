@@ -53,7 +53,7 @@
                     <div class="flex items-center gap-6">
                         <div class="text-right">
                             <p class="font-black text-lg" style="background: linear-gradient(135deg, #00d4ff, #8a2ce2); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
-                                {{ number_format($commande->total(), 2) }} €
+                                {{ number_format($commande->total, 2) }} €
                             </p>
                         </div>
 

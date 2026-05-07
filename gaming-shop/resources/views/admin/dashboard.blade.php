@@ -27,6 +27,18 @@
         </div>
 
         <div class="bg-surface-container rounded-xl p-5 flex flex-col gap-2">
+            <span class="material-symbols-outlined text-yellow-400 text-2xl">schedule</span>
+            <p class="text-2xl font-black font-headline text-yellow-400">{{ $stats['en_attente'] }}</p>
+            <p class="text-xs text-on-surface-variant uppercase tracking-widest">En attente</p>
+        </div>
+
+        <div class="bg-surface-container rounded-xl p-5 flex flex-col gap-2">
+            <span class="material-symbols-outlined text-green-400 text-2xl">payments</span>
+            <p class="text-2xl font-black font-headline text-green-400">{{ number_format($stats['revenu_total'], 2) }} €</p>
+            <p class="text-xs text-on-surface-variant uppercase tracking-widest">Revenu total</p>
+        </div>
+
+        <div class="bg-surface-container rounded-xl p-5 flex flex-col gap-2">
             <span class="material-symbols-outlined text-primary text-2xl">group</span>
             <p class="text-2xl font-black font-headline">{{ $stats['utilisateurs'] }}</p>
             <p class="text-xs text-on-surface-variant uppercase tracking-widest">Clients</p>

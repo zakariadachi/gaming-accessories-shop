@@ -58,7 +58,7 @@
                         <p class="text-xs text-[#6b6b9a]">Quantité : {{ $ligne->quantity }}</p>
                     </div>
                     <span class="font-black text-sm" style="color: #00d4ff;">
-                        {{ number_format($ligne->produit->prix * $ligne->quantity, 2) }} €
+                        {{ number_format($ligne->prix_unitaire * $ligne->quantity, 2) }} €
                     </span>
                 </div>
             @endforeach
@@ -67,7 +67,7 @@
         <div class="px-6 py-4 flex justify-between items-center border-t" style="border-color: #1e1e3f; background: #1a1a35;">
             <span class="font-black text-white">Total payé</span>
             <span class="text-xl font-black" style="background: linear-gradient(135deg, #00d4ff, #8a2ce2); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
-                {{ number_format($commande->total(), 2) }} €
+                {{ number_format($commande->total, 2) }} €
             </span>
         </div>
     </div>

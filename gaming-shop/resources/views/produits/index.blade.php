@@ -108,7 +108,7 @@
                 </div>
 
                 <div class="mt-12">
-                    {{ $produits->withQueryString()->links() }}
+                    {{ $produits->links() }}
                 </div>
             @endif
         </main>

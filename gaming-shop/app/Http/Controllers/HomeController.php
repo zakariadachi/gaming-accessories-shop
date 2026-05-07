@@ -11,12 +11,10 @@ class HomeController extends Controller
     {
         $categories = Categorie::all();
 
-        $produits = $categories->take(4)->map(function ($categorie) {
-            return Produit::with('categorie')
-                ->where('categorie_id', $categorie->id)
-                ->latest()
-                ->first();
-        })->filter();
+        $produits = Produit::with('categorie')
+            ->latest()
+            ->take(4)
+            ->get();
 
         return view('home', compact('produits', 'categories'));
     }

@@ -46,17 +46,9 @@ class Produit extends Model
         return round($this->reviews()->avg('note') ?? 0, 1);
     }
 
-    public function getImageUrlAttribute(): ?string
+    public function getImageUrlAttribute(): string
     {
-        if (!$this->image) return null;
-        if (str_starts_with($this->image, 'http')) return $this->image;
+        if (!$this->image) return asset('images/default-product.png');
         return Storage::url($this->image);
-    }
-
-    public function getImageAttribute($value): ?string
-    {
-        if (!$value) return null;
-        if (str_starts_with($value, 'http')) return $value;
-        return Storage::url($value);
     }
 }

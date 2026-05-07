@@ -13,9 +13,10 @@ class LigneCommande extends Model
     protected $table = 'ligne_commandes';
 
     protected $fillable = [
-        'quantity',
         'commande_id',
         'produit_id',
+        'quantity',
+        'prix_unitaire',
     ];
 
     public function commande(): BelongsTo
